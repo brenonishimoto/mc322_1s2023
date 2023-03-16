@@ -55,4 +55,20 @@ public class Cliente {
 	public void setEndereco(String endereco) {
 		this.endereco = endereco;
 	}
+	
+	public static boolean validarCPF(String cpf) {
+		boolean valido = true;
+		cpf = cpf.replaceAll("[0-9]+", "");
+		if (cpf.length() != 11) {
+			valido = false;
+			return valido;
+		}
+		for (int i = 0; i < cpf.length() - 1; i++) {
+			if (cpf.charAt(i) == cpf.charAt(i+1)) {
+				valido = false;
+				return valido;
+			}
+		}
+		return valido;
+	}
 }
