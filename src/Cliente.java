@@ -56,9 +56,9 @@ public class Cliente {
 		this.endereco = endereco;
 	}
 	
-	public boolean validarCPF(String cpf) {
+	public boolean validarCPF() {
 		boolean valido = true;
-		cpf = cpf.replaceAll("[^0-9]", "");
+		cpf = this.cpf.replaceAll("[^0-9]", "");
 		if (cpf.length() != 11) {
 			valido = false;
 			return valido;
