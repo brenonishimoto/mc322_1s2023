@@ -1,4 +1,0 @@
-INDEX VERSION 1.131+/home/cc2022/ra220599/mc322_1s2023/.metadata/.plugins/org.eclipse.jdt.core
-2691112611.index
-601633383.index
-1865797976.index

@@ -1,28 +1,19 @@
-public class ClientePF {
-	private String nome;
+import java.sql.Date;
+
+public class ClientePF extends Cliente{
 	private String cpf;
-	private String dataNascimento;
-	private int idade;
-	private String endereco;
+	private Date dataNascimento;
 	
 	// Construtor
-	public ClientePF(String nome, String cpf, String dataNascimento, int idade, String endereco) {
-		this.nome = nome;
+	public ClientePF(String nome, String endereco, Date dataLicenca,
+					String educacao, String genero, String classeEconomica,
+					List <Veiculo> listaVeiculos, String cpf, Date dataNascimento) {
+		super(nome, endereco, dataLicenca, educacao, genero, classeEconomica, listaVeiculos);
 		this.cpf = cpf;
 		this.dataNascimento = dataNascimento;
-		this.idade = idade;
-		this.endereco = endereco;
 	}
 	
-	//Getters e setters
-	public String getNome() {
-		return nome;
-	}
-	
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
-	
+	//Getters e setters	
 	public String getCpf() {
 		return cpf;
 	}
@@ -31,28 +22,12 @@ public class ClientePF {
 		this.cpf = cpf;
 	}
 
-	public String getDataNascimento() {
+	public Date getDataNascimento() {
 		return dataNascimento;
 	}
 	
-	public void setDataNascimento(String dataNascimento) {
+	public void setDataNascimento(Date dataNascimento) {
 		this.dataNascimento = dataNascimento;
-	}
-
-	public int getIdade() {
-		return idade;
-	}
-	
-	public void setIdade(int idade) {
-		this.idade = idade;
-	}
-	
-	public String getEndereco() {
-		return endereco;
-	}
-	
-	public void setEndereco(String endereco) {
-		this.endereco = endereco;
 	}
 	
 	public boolean validarCPF() {
@@ -116,10 +91,7 @@ public class ClientePF {
 	}
 
 	public String toString() {
-		return "Nome = " + getNome() + "\n" +
-			"Cpf = " + getCpf() + "\n" +
-			"Data de Nascimento = " + getDataNascimento() + "\n" +
-			"Idade = " + getIdade() + "\n" +
-			"Endereço = " + getEndereco() + "\n";
+		return "Cpf = " + getCpf() + "\n" +
+			"Data de Nascimento = " + getDataNascimento();
 	} 
 }
