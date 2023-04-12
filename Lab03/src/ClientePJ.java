@@ -1,16 +1,16 @@
 import java.sql.Date;
+import java.util.ArrayList;
 
 public class ClientePJ extends Cliente{
 	private String cnpj;
-	private Date dataNascimento;
+	private Date dataFundacao;
 	
 	// Construtor
-	public ClientePJ(String nome, String endereco, Date dataLicenca,
-					String educacao, String genero, String classeEconomica,
-					List <Veiculo> listaVeiculos, String cnpj, Date dataNascimento) {
-		super(nome, endereco, dataLicenca, educacao, genero, classeEconomica, listaVeiculos);
+	public ClientePJ(String nome, String endereco, 
+					ArrayList <Veiculo> listaVeiculos, String cnpj, Date dataFundacao) {
+		super(nome, endereco);
 		this.cnpj = cnpj;
-		this.dataNascimento = dataNascimento;
+		this.dataFundacao = dataFundacao;
 	}
 	
 	//Getters e setters	
@@ -22,15 +22,15 @@ public class ClientePJ extends Cliente{
 		this.cnpj = cnpj;
 	}
 
-	public Date getDataNascimento() {
-		return dataNascimento;
+	public Date getDataFundacao() {
+		return dataFundacao;
 	}
 	
-	public void setDataNascimento(Date dataNascimento) {
-		this.dataNascimento = dataNascimento;
+	public void setDataFundacao(Date dataFundacao) {
+		this.dataFundacao = dataFundacao;
 	}
 	
-	public boolean validarCPF() {
+	public boolean validarCNPJ() {
 		boolean valido = true;
 		cnpj = this.cnpj.replaceAll("[^0-9]", "");
 		if (cnpj.length() != 14) {
@@ -98,6 +98,6 @@ public class ClientePJ extends Cliente{
 
 	public String toString() {
 		return "Cnpj = " + getCnpj() + "\n" +
-			"Data de Nascimento = " + getDataNascimento();
+			"Data de Nascimento = " + getDataFundacao();
 	} 
 }

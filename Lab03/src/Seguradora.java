@@ -5,8 +5,8 @@ public class Seguradora {
 	private String telefone;
 	private String email;
 	private String endereco;
-	private ArrayList<Sinistro> listaSinistro[];
-	private ArrayList<Cliente> listaCliente[];
+	private ArrayList<Sinistro> listaSinistro;
+	private ArrayList<Cliente> listaCliente;
 	
 	// Construtor
 	public Seguradora(String nome, String telefone, String email, String endereco) {
@@ -14,8 +14,8 @@ public class Seguradora {
 		this.telefone = telefone;
 		this.email = email;
 		this.endereco = endereco;
-		listaSinistro = listaSinistro();
-		listaCliente = listaCliente();
+		listaSinistro = new ArrayList<Sinistro>();
+		listaCliente = new ArrayList<Cliente>();
 	}
 	
 	// Getters e setters
@@ -52,27 +52,27 @@ public class Seguradora {
 	}
 	
 	public boolean cadastrarCliente(Cliente cliente){
-
+		return true;
 	}
 
 	public boolean removerCliente(String cliente){
-
+		return true;
 	}
  
 	public ArrayList<Cliente> listarClientes(String tipoCliente){
- 
+		return listaCliente;
 	}
  
  	public boolean gerarSinistro(){
- 
+		return true;
 	}
  
 	public boolean visualizarSinistro(String cliente){
- 
+		return true;
 	}
  
 	public ArrayList<Sinistro> listarSinistros(){
-
+		return listaSinistro;
 	}
 
 	public String toString() {
