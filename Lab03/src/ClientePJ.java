@@ -7,10 +7,10 @@ public class ClientePJ extends Cliente{
 	
 	// Construtor
 	public ClientePJ(String nome, String endereco, 
-					ArrayList <Veiculo> listaVeiculos, String cnpj, Date dataFundacao) {
+					ArrayList <Veiculo> listaVeiculos, String cnpj, java.util.Date dataFundacao2) {
 		super(nome, endereco);
 		this.cnpj = cnpj;
-		this.dataFundacao = dataFundacao;
+		this.dataFundacao = (Date) dataFundacao2;
 	}
 	
 	//Getters e setters	
@@ -30,9 +30,9 @@ public class ClientePJ extends Cliente{
 		this.dataFundacao = dataFundacao;
 	}
 	
-	public boolean validarCNPJ() {
+	public static boolean validarCNPJ(String cnpj) {
 		boolean valido = true;
-		cnpj = this.cnpj.replaceAll("[^0-9]", "");
+		cnpj = cnpj.replaceAll("[^0-9]", "");
 		if (cnpj.length() != 14) {
 			valido = false;
 			return valido;

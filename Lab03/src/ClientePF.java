@@ -10,16 +10,16 @@ public class ClientePF extends Cliente{
 	private String classeEconomica;
 	
 	// Construtor
-	public ClientePF(String nome, String endereco, Date dataLicenca,
+	public ClientePF(String nome, String endereco, java.util.Date dataLicenca2,
 					String educacao, String genero, String classeEconomica,
-					ArrayList <Veiculo> listaVeiculos, String cpf, Date dataNascimento) {
+					ArrayList <Veiculo> listaVeiculos, String cpf, java.util.Date dataNascimento2) {
 		super(nome, endereco);
 		this.cpf = cpf;
-		this.dataLicenca = dataLicenca;
+		this.dataLicenca = (Date) dataLicenca2;
 		this.educacao = educacao;
 		this.genero = genero;
 		this.classeEconomica = classeEconomica;
-		this.dataNascimento = dataNascimento;
+		this.dataNascimento = (Date) dataNascimento2;
 	}
 	
 	//Getters e setters	
@@ -71,9 +71,9 @@ public class ClientePF extends Cliente{
 		this.classeEconomica = classeEconomica;
 	}
 	
-	public boolean validarCPF() {
+	public static boolean validarCPF(String cpf) {
 		boolean valido = true;
-		cpf = this.cpf.replaceAll("[^0-9]", "");
+		cpf = cpf.replaceAll("[^0-9]", "");
 		if (cpf.length() != 11) {
 			valido = false;
 			return valido;
