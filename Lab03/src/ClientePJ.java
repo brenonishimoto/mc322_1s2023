@@ -1,4 +1,4 @@
-import java.sql.Date;
+import java.util.Date;
 import java.util.ArrayList;
 
 public class ClientePJ extends Cliente{
@@ -11,6 +11,7 @@ public class ClientePJ extends Cliente{
 		super(nome, endereco);
 		this.cnpj = cnpj;
 		this.dataFundacao = (Date) dataFundacao2;
+		listaVeiculos = new ArrayList<Veiculo>();
 	}
 	
 	//Getters e setters	
@@ -53,11 +54,11 @@ public class ClientePJ extends Cliente{
 		int soma1 = 0;
 		int peso1 = 5;
 
-		for (int i = 0; i < 11; i++){
+		for (int i = 0; i < 12; i++){
 			numero = (int)(cnpj.charAt(i) - 48);
 			soma1 = (soma1) + (numero * peso1);
 			peso1 = peso1 - 1 ;
-			if (peso1 == 2){
+			if (peso1 == 1){
 				peso1 = 9;
 			}
 		}
@@ -73,11 +74,11 @@ public class ClientePJ extends Cliente{
 		int soma2 = 0;
 		int peso2 = 6;
 
-		for (int i = 0; i < 10; i++){
+		for (int i = 0; i < 13; i++){
 			numero = (int)(cnpj.charAt(i) - 48);
 			soma2 = (soma2) + (numero * peso2);
 			peso2 = peso2 - 1 ;
-			if(peso2 == 2){
+			if(peso2 == 1){
 				peso2 = 9;
 			}
 		}
@@ -88,7 +89,7 @@ public class ClientePJ extends Cliente{
 			digito2 = (char)((11 - resto2) + 48);
 		}
 
-		if ((digito1 == cnpj.charAt(9)) && (digito2 == cnpj.charAt(10))){
+		if ((digito1 == cnpj.charAt(12)) && (digito2 == cnpj.charAt(13))){
 			return valido;
 		}else {
 			valido = false;
@@ -97,7 +98,10 @@ public class ClientePJ extends Cliente{
 	}
 
 	public String toString() {
-		return "Cnpj = " + getCnpj() + "\n" +
-			"Data de Nascimento = " + getDataFundacao();
+		return "------------------Cliente-------------------- " + "\n" +
+			"Nome = " + getNome() + "\n" +
+			"Cnpj = " + getCnpj() + "\n" +
+			"Endereço = " + getEndereco() + "\n" +
+			"Data de Fundação = " + getDataFundacao();
 	} 
 }

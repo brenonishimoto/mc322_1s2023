@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class Seguradora {
 	private String nome;
@@ -54,7 +53,7 @@ public class Seguradora {
 
 	public Cliente encontrarCliente(String cliente){
 		for(int i = 0; i < listaCliente.size();i++){
-			if(listaCliente.get(i).getNome() == cliente){
+			if(listaCliente.get(i).getNome().equals(cliente)){
 				return listaCliente.get(i);
 			}else{
 				System.out.println("O Cliente não está cadastrado.");
@@ -75,82 +74,54 @@ public class Seguradora {
 	}
 
 	public boolean cadastrarCliente(Cliente cliente) {
-		for(int i = 0; i < listaCliente.size();i++){
-			if(listaCliente.get(i).getNome() == cliente.getNome()){
+		for(int i = 0; i < listaCliente.size(); i++){
+			if(listaCliente.get(i).getNome().equals(cliente.getNome())){
 				System.out.println("O Cliente já está cadastrado.");
 				return false;
-			}else{
-				listaCliente.add(cliente);
 			}
 		}
+		listaCliente.add(cliente);
+		System.out.println("O Cliente foi cadastrado.");
 		return true;
 	}
 
 	public boolean removerCliente(String cliente){
 		for(int i = 0; i < listaCliente.size();i++){
-			if(listaCliente.get(i).getNome() == cliente){
+			if(listaCliente.get(i).getNome().equals(cliente)){
 				listaCliente.remove(i);
 				System.out.println("O Cliente foi removido.");
 				return true;
-			}else{
-				System.out.println("O Cliente não está cadastrado.");
 			}
 		}
+		System.out.println("O Cliente não está cadastrado.");
 		return false;
 	}
  
 	public void listarClientes(){
+		if (listaCliente.size() == 0){
+			System.out.println("A lista de clientes está vazia"); 
+			return;
+		}
 		for (int i = 0; i < listaCliente.size();i++) 
 		{ 		      
-			System.out.println(listaCliente.get(i)); 		
+			System.out.println(listaCliente.get(i).toString()); 		
 		}
 	}
- 
- 	public boolean gerarSinistro(Seguradora seguradora){
-		try (Scanner scanner = new Scanner(System.in)) {
-			System.out.println("Qual o nome do Cliente?");
-			String cliente = scanner.next();
-			int posicao = 0;
-			for(int i = 0; i < listaCliente.size();i++){
-				if(listaCliente.get(i).getNome() == cliente){
-					posicao = i;
-				}else{
-					System.out.println("O Cliente não está cadastrado.");
-					break;
-				}
-			}
-			int posicao_placa = 0;
-			System.out.println("Qual a placa do carro?");
-			String placa = scanner.next();
-			for(int j = 0; j < listaCliente.get(posicao).getListaVeiculos().size();j++){
-				if(listaCliente.get(posicao).getListaVeiculos().get(j).getPlaca() == placa){
-					posicao_placa = j;
-				}else{
-					System.out.println("O Carro não está cadastrado.");
-					break;
-				}
-			}
-			System.out.println("Qual a data do acidente?");
-			String data = scanner.next();
-			System.out.println("Qual o endereço do acidente?");
-			String endereco = scanner.next();
-			Sinistro sinistro = new Sinistro(data, endereco, seguradora,
-											 listaCliente.get(posicao).getListaVeiculos().get(posicao_placa),
-											 listaCliente.get(posicao));
-			listaSinistro.add(sinistro);
-			return true;
-		}
-	}
- 
-	public boolean visualizarSinistro(Sinistro sinistro){
-		sinistro.toString();
+
+ 	public boolean gerarSinistro(Sinistro sinistro){
+		listaSinistro.add(sinistro);
+		System.out.println("O Sinistro foi adicionado, o código de Identificação é: " + sinistro.getId());
 		return true;
+		}
+ 
+	public void visualizarSinistro(Sinistro sinistro){
+		System.out.println(sinistro.toString());
 	}
  
 	public void listarSinistros(){
 		for (int i = 0; i < listaSinistro.size();i++) 
 		{ 		      
-			System.out.println(listaCliente.get(i)); 		
+			System.out.println(listaSinistro.get(i).toString()); 		
 		}
 	}
 
@@ -158,6 +129,6 @@ public class Seguradora {
 		return "Nome = " + getNome() + "\n" +
 			"Telefone = " + getTelefone() + "\n" +
 			"Email = " + getEmail() + "\n" +
-			"Endereço = " + getEndereco() + "\n";
+			"Endereço = " + getEndereco() + "\n" ;
 	} 
 }

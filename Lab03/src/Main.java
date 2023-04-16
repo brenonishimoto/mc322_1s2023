@@ -10,6 +10,7 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
         ArrayList<Seguradora> listaSeguradoras = new ArrayList<Seguradora>();
         while (true){
+            System.out.println("-----------------Menu-----------------");
             System.out.println("Selecione uma opção:");
             System.out.println("(1) Cadastrar Seguradora");
             System.out.println("(2) Cadastrar Cliente");
@@ -27,10 +28,10 @@ public class Main {
             if(opcao == 0){
                 System.out.println("Até mais!");
                 scanner.close();
-                break;
+                return;
             }
 
-            if(opcao == 1){
+            else if(opcao == 1){
                 System.out.println("Nome da Seguradora:");
                 String nome = scanner.next();
                 System.out.println("Telefone da Seguradora:");
@@ -42,17 +43,14 @@ public class Main {
                 Seguradora seguradora = new Seguradora(nome, telefone, email, endereco);
                 listaSeguradoras.add(seguradora);
                 System.out.println("A seguradora " + seguradora.getNome() + " foi cadastrada!");
-                for (int i = 0; i < listaSeguradoras.size();i++) { 		      
-                        System.out.println(listaSeguradoras.get(i)); 		
-                    }
-                }
+            }
 
-            if(opcao == 2){
+            else if(opcao == 2){
                 System.out.println("Qual seguradora o cliente pertence?");
                 String nome_seguradora = scanner.next();
                 int posicao = 0;
                 for(int i = 0; i< listaSeguradoras.size(); i++){
-                    if (listaSeguradoras.get(i).getNome() == nome_seguradora){
+                    if (listaSeguradoras.get(i).getNome().equals(nome_seguradora)){
                         posicao = i;
                     }
                     else{
@@ -88,6 +86,7 @@ public class Main {
                     ArrayList<Veiculo> listaVeiculos = new ArrayList<Veiculo>();
                     Cliente novo_cliente_pf = new ClientePF(nome, endereco, dataLicenca , educacao, genero , classeEconomica, listaVeiculos, cpf_cnpj, dataNascimento);
                     listaSeguradoras.get(posicao).cadastrarCliente(novo_cliente_pf);
+                    break;
                 }
                 if (cpf_cnpj.length() == 14) {
                     if (ClientePJ.validarCNPJ(cpf_cnpj) == false){
@@ -108,16 +107,17 @@ public class Main {
                 }
                 else{
                     System.out.println("Coloque um CPF/CNPJ válido.");
+                    break;
                 }
             }
             }
 
-            if(opcao == 3){
+            else if(opcao == 3){
                 System.out.println("Qual seguradora o cliente pertence?");
                 String nome_seguradora = scanner.next();
                 int posicao = 0;
                 for(int i = 0; i< listaSeguradoras.size(); i++){
-                    if (listaSeguradoras.get(i).getNome() == nome_seguradora){
+                    if (listaSeguradoras.get(i).getNome().equals(nome_seguradora)){
                         posicao = i;
                     }
                     else{
@@ -127,15 +127,32 @@ public class Main {
                 }
                 System.out.println("Qual o nome do Cliente?");
                 String nome_cliente = scanner.next();
-                listaSeguradoras.get(posicao).encontrarCliente(nome_cliente).cadastrarVeiculo();
+                Cliente cliente = listaSeguradoras.get(posicao).encontrarCliente(nome_cliente);
+                if (cliente != null){
+                    System.out.println("Qual a placa do carro?");
+                    String placa = scanner.next();
+                    System.out.println("Qual a marca do carro?");
+                    String marca = scanner.next();
+                    System.out.println("Qual o modelo do carro?");
+                    String modelo = scanner.next();
+                    System.out.println("Qual o ano de Fabricação do carro?");
+                    int anoFabricacao = scanner.nextInt();
+                    Veiculo veiculo = new Veiculo(placa, marca, modelo, anoFabricacao);
+                    cliente.cadastrarVeiculo(veiculo);
+                    System.out.println("Veículo cadastrado com sucesso!");
+                }
+                else{
+                    System.out.println("Cliente não encontrado!");
+                }
             }
+            
 
-            if(opcao == 4){
+            else if(opcao == 4){
                 System.out.println("Qual seguradora o cliente pertence?");
                 String nome_seguradora = scanner.next();
                 int posicao = 0;
                 for(int i = 0; i< listaSeguradoras.size(); i++){
-                    if (listaSeguradoras.get(i).getNome() == nome_seguradora){
+                    if (listaSeguradoras.get(i).getNome().equals(nome_seguradora)){
                         posicao = i;
                     }
                     else{
@@ -143,15 +160,36 @@ public class Main {
                         break;
                     }
                 }
-                listaSeguradoras.get(posicao).gerarSinistro(listaSeguradoras.get(posicao));
+                System.out.println("Qual o nome do Cliente?");
+                String nome_cliente = scanner.next();
+                Cliente cliente = listaSeguradoras.get(posicao).encontrarCliente(nome_cliente);
+                int posicao_placa = 0;
+                System.out.println("Qual a placa do carro?");
+                String placa = scanner.next();
+                for(int j = 0; j < cliente.getListaVeiculos().size();j++){
+                    if(cliente.getListaVeiculos().get(j).getPlaca().equals(placa)){
+                        posicao_placa = j;
+                    }else{
+                        System.out.println("O Carro não está cadastrado.");
+                        break;
+                    }
+                }
+                System.out.println("Qual a data do acidente?");
+                String data = scanner.next();
+                System.out.println("Qual o endereço do acidente?");
+                String endereco = scanner.next();
+                Sinistro sinistro = new Sinistro(data, endereco, listaSeguradoras.get(posicao),
+											cliente.getListaVeiculos().get(posicao_placa),
+											cliente);
+                listaSeguradoras.get(posicao).gerarSinistro(sinistro);
             }
 
-            if(opcao == 5){
+            else if(opcao == 5){
                 System.out.println("Qual seguradora o cliente pertence?");
                 String nome_seguradora = scanner.next();
                 int posicao = 0;
                 for(int i = 0; i< listaSeguradoras.size(); i++){
-                    if (listaSeguradoras.get(i).getNome() == nome_seguradora){
+                    if (listaSeguradoras.get(i).getNome().equals(nome_seguradora)){
                         posicao = i;
                     }
                     else{
@@ -164,12 +202,12 @@ public class Main {
                 listaSeguradoras.get(posicao).removerCliente(nome_cliente);
             }
 
-            if(opcao == 6){
+            else if(opcao == 6){
                 System.out.println("Qual seguradora o cliente pertence?");
                 String nome_seguradora = scanner.next();
                 int posicao = 0;
                 for(int i = 0; i< listaSeguradoras.size(); i++){
-                    if (listaSeguradoras.get(i).getNome() == nome_seguradora){
+                    if (listaSeguradoras.get(i).getNome().equals(nome_seguradora)){
                         posicao = i;
                     }
                     else{
@@ -180,12 +218,12 @@ public class Main {
                 listaSeguradoras.get(posicao).listarClientes();
             }
 
-            if(opcao == 7){
+            else if(opcao == 7){
                 System.out.println("Qual seguradora o cliente pertence?");
                 String nome_seguradora = scanner.next();
                 int posicao = 0;
                 for(int i = 0; i< listaSeguradoras.size(); i++){
-                    if (listaSeguradoras.get(i).getNome() == nome_seguradora){
+                    if (listaSeguradoras.get(i).getNome().equals(nome_seguradora)){
                         posicao = i;
                     }
                     else{
@@ -199,12 +237,12 @@ public class Main {
                 listaSeguradoras.get(posicao).visualizarSinistro(sinistro);
             }
 
-            if(opcao == 8){
+            else if(opcao == 8){
                 System.out.println("Qual seguradora o cliente pertence?");
                 String nome_seguradora = scanner.next();
                 int posicao = 0;
                 for(int i = 0; i< listaSeguradoras.size(); i++){
-                    if (listaSeguradoras.get(i).getNome() == nome_seguradora){
+                    if (listaSeguradoras.get(i).getNome().equals(nome_seguradora)){
                         posicao = i;
                     }
                     else{
@@ -215,12 +253,12 @@ public class Main {
                 listaSeguradoras.get(posicao).listarSinistros();
             }
 
-            if(opcao == 9){
+            else if(opcao == 9){
                 System.out.println("Qual seguradora o cliente pertence?");
                 String nome_seguradora = scanner.next();
                 int posicao = 0;
                 for(int i = 0; i< listaSeguradoras.size(); i++){
-                    if (listaSeguradoras.get(i).getNome() == nome_seguradora){
+                    if (listaSeguradoras.get(i).getNome().equals(nome_seguradora)){
                         posicao = i;
                     }
                     else{
@@ -235,4 +273,3 @@ public class Main {
         }
     }
 }
-

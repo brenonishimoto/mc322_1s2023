@@ -69,8 +69,9 @@ public class Sinistro {
 	}
 
 	public String toString() {
-		return "Id = " + getId() + "\n" +
+		return "-------------------------------------- " + "\n" +
+			"Id = " + getId() + "\n" +
 			"Data = " + getData() + "\n" +
-			"Endereço = " + getEndereco() + "\n";
+			"Endereço = " + getEndereco() + "\n" ;
 	} 
 }

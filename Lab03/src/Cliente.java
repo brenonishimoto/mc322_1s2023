@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class Cliente {
 	private String nome;
@@ -30,20 +29,9 @@ public class Cliente {
 		this.endereco = endereco;
 	}
 
-	public boolean cadastrarVeiculo(){
-		try (Scanner scanner = new Scanner(System.in)) {
-			System.out.println("Qual a placa do carro?");
-			String placa = scanner.next();
-			System.out.println("Qual a marca do carro?");
-			String marca = scanner.next();
-			System.out.println("Qual o modelo do carro?");
-			String modelo = scanner.next();
-			System.out.println("Qual o ano de Fabricação do carro?");
-			int anoFabricacao = scanner.nextInt();
-			Veiculo veiculo = new Veiculo(placa, marca, modelo, anoFabricacao);
+	public boolean cadastrarVeiculo(Veiculo veiculo){
 			listaVeiculos.add(veiculo);
 			return true;
-		}
 	}
 
 	public ArrayList<Veiculo> getListaVeiculos(){

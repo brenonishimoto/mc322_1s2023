@@ -1,5 +1,5 @@
-import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class ClientePF extends Cliente{
 	private String cpf;
@@ -20,6 +20,7 @@ public class ClientePF extends Cliente{
 		this.genero = genero;
 		this.classeEconomica = classeEconomica;
 		this.dataNascimento = (Date) dataNascimento2;
+		listaVeiculos = new ArrayList<Veiculo>();
 	}
 	
 	//Getters e setters	
@@ -132,7 +133,14 @@ public class ClientePF extends Cliente{
 	}
 
 	public String toString() {
-		return "Cpf = " + getCpf() + "\n" +
-			"Data de Nascimento = " + getDataNascimento();
+		return "----------------Cliente---------------------- " + "\n" +
+			"Nome = " + getNome() + "\n" +
+			"Cpf = " + getCpf() + "\n" +
+			"Endereço = " + getEndereco() + "\n" +
+			"Data Licença = " + getDataLicenca() + "\n" +
+			"Data de Nascimento = " + getDataNascimento() + "\n" +
+			"Educação = " + getEducacao() + "\n" +
+			"Gênero = " + getGenero() + "\n" +
+			"Classe = " + getClasseEconomica() + "\n" ;
 	} 
 }

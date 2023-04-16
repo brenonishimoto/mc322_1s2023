@@ -47,9 +47,10 @@ public class Veiculo {
 	}
 	
 	public String toString() {
-		return "Placa = " + getPlaca() + "\n" +
+		return "-----------------Veiculo--------------------- " + "\n" +
+			"Placa = " + getPlaca() + "\n" +
 			"Marca = " + getMarca() + "\n" +
 			"Modelo = " + getModelo() + "\n" +
-			"Ano de Fabricação = " + getAnoFabricacao() + "\n";
+			"Ano de Fabricação = " + getAnoFabricacao();
 	} 
 }
