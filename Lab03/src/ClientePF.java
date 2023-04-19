@@ -72,6 +72,11 @@ public class ClientePF extends Cliente{
 		this.classeEconomica = classeEconomica;
 	}
 	
+	@Override
+	public String getCadastro(){
+		return this.cpf;
+	}
+	
 	public static boolean validarCPF(String cpf) {
 		boolean valido = true;
 		cpf = cpf.replaceAll("[^0-9]", "");
@@ -132,6 +137,7 @@ public class ClientePF extends Cliente{
 		}
 	}
 
+	@Override
 	public String toString() {
 		return "----------------Cliente---------------------- " + "\n" +
 			"Nome = " + getNome() + "\n" +

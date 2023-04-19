@@ -51,9 +51,9 @@ public class Seguradora {
 		this.endereco = endereco;
 	}
 
-	public Cliente encontrarCliente(String cliente){
+	public Cliente encontrarCliente(String cpf_cnpj){
 		for(int i = 0; i < listaCliente.size();i++){
-			if(listaCliente.get(i).getNome().equals(cliente)){
+			if(listaCliente.get(i).getCadastro().equals(cpf_cnpj)){
 				return listaCliente.get(i);
 			}else{
 				System.out.println("O Cliente não está cadastrado.");
@@ -75,7 +75,7 @@ public class Seguradora {
 
 	public boolean cadastrarCliente(Cliente cliente) {
 		for(int i = 0; i < listaCliente.size(); i++){
-			if(listaCliente.get(i).getNome().equals(cliente.getNome())){
+			if(listaCliente.get(i).getCadastro().equals(cliente.getCadastro())){
 				System.out.println("O Cliente já está cadastrado.");
 				return false;
 			}
@@ -85,9 +85,9 @@ public class Seguradora {
 		return true;
 	}
 
-	public boolean removerCliente(String cliente){
+	public boolean removerCliente(String cpf_cnpj){
 		for(int i = 0; i < listaCliente.size();i++){
-			if(listaCliente.get(i).getNome().equals(cliente)){
+			if(listaCliente.get(i).getNome().equals(cpf_cnpj)){
 				listaCliente.remove(i);
 				System.out.println("O Cliente foi removido.");
 				return true;
@@ -97,15 +97,16 @@ public class Seguradora {
 		return false;
 	}
  
-	public void listarClientes(){
+	public boolean listarClientes(){
 		if (listaCliente.size() == 0){
 			System.out.println("A lista de clientes está vazia"); 
-			return;
+			return false;
 		}
 		for (int i = 0; i < listaCliente.size();i++) 
 		{ 		      
 			System.out.println(listaCliente.get(i).toString()); 		
 		}
+		return true;
 	}
 
  	public boolean gerarSinistro(Sinistro sinistro){
@@ -114,15 +115,17 @@ public class Seguradora {
 		return true;
 		}
  
-	public void visualizarSinistro(Sinistro sinistro){
+	public boolean visualizarSinistro(Sinistro sinistro){
 		System.out.println(sinistro.toString());
+		return true;
 	}
  
-	public void listarSinistros(){
+	public boolean listarSinistros(){
 		for (int i = 0; i < listaSinistro.size();i++) 
 		{ 		      
 			System.out.println(listaSinistro.get(i).toString()); 		
 		}
+		return true;
 	}
 
 	public String toString() {

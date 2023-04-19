@@ -24,6 +24,7 @@ public class Main {
             System.out.println("(0) Sair");
 
             int opcao = scanner.nextInt();
+            scanner.nextLine();
 
             if(opcao == 0){
                 System.out.println("Até mais!");
@@ -33,21 +34,21 @@ public class Main {
 
             else if(opcao == 1){
                 System.out.println("Nome da Seguradora:");
-                String nome = scanner.next();
+                String nome = scanner.nextLine();
                 System.out.println("Telefone da Seguradora:");
-                String telefone = scanner.next();
+                String telefone = scanner.nextLine();
                 System.out.println("E-mail da Seguradora:");
-                String email = scanner.next();
+                String email = scanner.nextLine();
                 System.out.println("Endereço da Seguradora:");
-                String endereco = scanner.next();
+                String endereco = scanner.nextLine();
                 Seguradora seguradora = new Seguradora(nome, telefone, email, endereco);
                 listaSeguradoras.add(seguradora);
-                System.out.println("A seguradora " + seguradora.getNome() + " foi cadastrada!");
+                System.out.println("A seguradora " + seguradora.getNome() + "foi cadastrada!");
             }
 
             else if(opcao == 2){
                 System.out.println("Qual seguradora o cliente pertence?");
-                String nome_seguradora = scanner.next();
+                String nome_seguradora = scanner.nextLine();
                 int posicao = 0;
                 for(int i = 0; i< listaSeguradoras.size(); i++){
                     if (listaSeguradoras.get(i).getNome().equals(nome_seguradora)){
@@ -59,7 +60,7 @@ public class Main {
                     }
                     
                 System.out.println("CPF/CNPJ?");
-                String cpf_cnpj = scanner.next();
+                String cpf_cnpj = scanner.nextLine();
                 cpf_cnpj = cpf_cnpj.replaceAll("[^0-9]", "");
                 if (cpf_cnpj.length() == 11) {
                     if (ClientePF.validarCPF(cpf_cnpj) == false){
@@ -67,22 +68,22 @@ public class Main {
                         break;
                     }
                     System.out.println("Nome:");
-                    String nome = scanner.next();
+                    String nome = scanner.nextLine();
                     System.out.println("Endereço:");
-                    String endereco = scanner.next();
+                    String endereco = scanner.nextLine();
                     System.out.println("Data da Licença (XX/XX/XXXX):");
-                    String dataLicencaStr = scanner.next();
+                    String dataLicencaStr = scanner.nextLine();
                     SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
                     Date dataLicenca = formatter.parse(dataLicencaStr);
                     System.out.println("Data de Nascimento (XX/XX/XXXX):");
-                    String dataNascimentoStr = scanner.next();
+                    String dataNascimentoStr = scanner.nextLine();
                     Date dataNascimento = formatter.parse(dataNascimentoStr);
                     System.out.println("Nivel de Educação:");
-                    String educacao = scanner.next();
+                    String educacao = scanner.nextLine();
                     System.out.println("Genero:");
-                    String genero = scanner.next();
+                    String genero = scanner.nextLine();
                     System.out.println("Classe Econômica:");
-                    String classeEconomica = scanner.next();
+                    String classeEconomica = scanner.nextLine();
                     ArrayList<Veiculo> listaVeiculos = new ArrayList<Veiculo>();
                     Cliente novo_cliente_pf = new ClientePF(nome, endereco, dataLicenca , educacao, genero , classeEconomica, listaVeiculos, cpf_cnpj, dataNascimento);
                     listaSeguradoras.get(posicao).cadastrarCliente(novo_cliente_pf);
@@ -94,11 +95,11 @@ public class Main {
                         break;
                     }
                     System.out.println("Nome:");
-                    String nome = scanner.next();
+                    String nome = scanner.nextLine();
                     System.out.println("Endereço:");
-                    String endereco = scanner.next();
+                    String endereco = scanner.nextLine();
                     System.out.println("Data de Fundação (XX/XX/XXXX):");
-                    String dataFundacaoStr = scanner.next();
+                    String dataFundacaoStr = scanner.nextLine();
                     SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
                     Date dataFundacao = formatter.parse(dataFundacaoStr);
                     ArrayList<Veiculo> listaVeiculos = new ArrayList<Veiculo>();
@@ -114,7 +115,7 @@ public class Main {
 
             else if(opcao == 3){
                 System.out.println("Qual seguradora o cliente pertence?");
-                String nome_seguradora = scanner.next();
+                String nome_seguradora = scanner.nextLine();
                 int posicao = 0;
                 for(int i = 0; i< listaSeguradoras.size(); i++){
                     if (listaSeguradoras.get(i).getNome().equals(nome_seguradora)){
@@ -125,16 +126,17 @@ public class Main {
                         break;
                     }
                 }
-                System.out.println("Qual o nome do Cliente?");
-                String nome_cliente = scanner.next();
-                Cliente cliente = listaSeguradoras.get(posicao).encontrarCliente(nome_cliente);
+                System.out.println("Qual o CPF/CNPJ do Cliente?");
+                String cpf_cnpj = scanner.nextLine();
+                cpf_cnpj = cpf_cnpj.replaceAll("[^0-9]", "");
+                Cliente cliente = listaSeguradoras.get(posicao).encontrarCliente(cpf_cnpj);
                 if (cliente != null){
                     System.out.println("Qual a placa do carro?");
-                    String placa = scanner.next();
+                    String placa = scanner.nextLine();
                     System.out.println("Qual a marca do carro?");
-                    String marca = scanner.next();
+                    String marca = scanner.nextLine();
                     System.out.println("Qual o modelo do carro?");
-                    String modelo = scanner.next();
+                    String modelo = scanner.nextLine();
                     System.out.println("Qual o ano de Fabricação do carro?");
                     int anoFabricacao = scanner.nextInt();
                     Veiculo veiculo = new Veiculo(placa, marca, modelo, anoFabricacao);
@@ -149,7 +151,7 @@ public class Main {
 
             else if(opcao == 4){
                 System.out.println("Qual seguradora o cliente pertence?");
-                String nome_seguradora = scanner.next();
+                String nome_seguradora = scanner.nextLine();
                 int posicao = 0;
                 for(int i = 0; i< listaSeguradoras.size(); i++){
                     if (listaSeguradoras.get(i).getNome().equals(nome_seguradora)){
@@ -160,12 +162,16 @@ public class Main {
                         break;
                     }
                 }
-                System.out.println("Qual o nome do Cliente?");
-                String nome_cliente = scanner.next();
-                Cliente cliente = listaSeguradoras.get(posicao).encontrarCliente(nome_cliente);
+                System.out.println("Qual o CPF/CNPJ do Cliente?");
+                String cpf_cnpj = scanner.nextLine();
+                cpf_cnpj = cpf_cnpj.replaceAll("[^0-9]", "");
+                Cliente cliente = listaSeguradoras.get(posicao).encontrarCliente(cpf_cnpj);
+                if (cliente == null){
+                    continue;
+                }
                 int posicao_placa = 0;
                 System.out.println("Qual a placa do carro?");
-                String placa = scanner.next();
+                String placa = scanner.nextLine();
                 for(int j = 0; j < cliente.getListaVeiculos().size();j++){
                     if(cliente.getListaVeiculos().get(j).getPlaca().equals(placa)){
                         posicao_placa = j;
@@ -175,9 +181,9 @@ public class Main {
                     }
                 }
                 System.out.println("Qual a data do acidente?");
-                String data = scanner.next();
+                String data = scanner.nextLine();
                 System.out.println("Qual o endereço do acidente?");
-                String endereco = scanner.next();
+                String endereco = scanner.nextLine();
                 Sinistro sinistro = new Sinistro(data, endereco, listaSeguradoras.get(posicao),
 											cliente.getListaVeiculos().get(posicao_placa),
 											cliente);
@@ -186,7 +192,7 @@ public class Main {
 
             else if(opcao == 5){
                 System.out.println("Qual seguradora o cliente pertence?");
-                String nome_seguradora = scanner.next();
+                String nome_seguradora = scanner.nextLine();
                 int posicao = 0;
                 for(int i = 0; i< listaSeguradoras.size(); i++){
                     if (listaSeguradoras.get(i).getNome().equals(nome_seguradora)){
@@ -197,14 +203,15 @@ public class Main {
                         break;
                     }
                 }
-                System.out.println("Qual o nome do Cliente?");
-                String nome_cliente = scanner.next();
-                listaSeguradoras.get(posicao).removerCliente(nome_cliente);
+                System.out.println("Qual o CPF/CNPJ do Cliente?");
+                String cpf_cnpj = scanner.nextLine();
+                cpf_cnpj = cpf_cnpj.replaceAll("[^0-9]", "");
+                listaSeguradoras.get(posicao).removerCliente(cpf_cnpj);
             }
 
             else if(opcao == 6){
                 System.out.println("Qual seguradora o cliente pertence?");
-                String nome_seguradora = scanner.next();
+                String nome_seguradora = scanner.nextLine();
                 int posicao = 0;
                 for(int i = 0; i< listaSeguradoras.size(); i++){
                     if (listaSeguradoras.get(i).getNome().equals(nome_seguradora)){
@@ -220,7 +227,7 @@ public class Main {
 
             else if(opcao == 7){
                 System.out.println("Qual seguradora o cliente pertence?");
-                String nome_seguradora = scanner.next();
+                String nome_seguradora = scanner.nextLine();
                 int posicao = 0;
                 for(int i = 0; i< listaSeguradoras.size(); i++){
                     if (listaSeguradoras.get(i).getNome().equals(nome_seguradora)){
@@ -239,7 +246,7 @@ public class Main {
 
             else if(opcao == 8){
                 System.out.println("Qual seguradora o cliente pertence?");
-                String nome_seguradora = scanner.next();
+                String nome_seguradora = scanner.nextLine();
                 int posicao = 0;
                 for(int i = 0; i< listaSeguradoras.size(); i++){
                     if (listaSeguradoras.get(i).getNome().equals(nome_seguradora)){
@@ -255,7 +262,7 @@ public class Main {
 
             else if(opcao == 9){
                 System.out.println("Qual seguradora o cliente pertence?");
-                String nome_seguradora = scanner.next();
+                String nome_seguradora = scanner.nextLine();
                 int posicao = 0;
                 for(int i = 0; i< listaSeguradoras.size(); i++){
                     if (listaSeguradoras.get(i).getNome().equals(nome_seguradora)){
@@ -266,9 +273,10 @@ public class Main {
                         break;
                     }
                 }
-                System.out.println("Qual o nome do Cliente?");
-                String nome_cliente = scanner.next();
-                listaSeguradoras.get(posicao).encontrarCliente(nome_cliente).listarVeiculos();
+                System.out.println("Qual o CPF/CNPJ do Cliente?");
+                String cpf_cnpj = scanner.nextLine();
+                cpf_cnpj = cpf_cnpj.replaceAll("[^0-9]", "");
+                listaSeguradoras.get(posicao).encontrarCliente(cpf_cnpj).listarVeiculos();
             }
         }
     }

@@ -31,6 +31,11 @@ public class ClientePJ extends Cliente{
 		this.dataFundacao = dataFundacao;
 	}
 	
+	@Override
+	public String getCadastro(){
+		return this.cnpj;
+	}
+
 	public static boolean validarCNPJ(String cnpj) {
 		boolean valido = true;
 		cnpj = cnpj.replaceAll("[^0-9]", "");
@@ -97,6 +102,7 @@ public class ClientePJ extends Cliente{
 		}
 	}
 
+	@Override
 	public String toString() {
 		return "------------------Cliente-------------------- " + "\n" +
 			"Nome = " + getNome() + "\n" +

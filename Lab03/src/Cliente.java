@@ -45,6 +45,10 @@ public class Cliente {
 		}
 	}
 
+	public String getCadastro(){
+		return null;
+	}
+
 	public String toString() {
 		return "Nome = " + getNome() + "\n" +
 			"Endereço = " + getEndereco() + "\n" +
