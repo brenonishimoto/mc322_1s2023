@@ -43,7 +43,7 @@ public class Main {
                 String endereco = scanner.nextLine();
                 Seguradora seguradora = new Seguradora(nome, telefone, email, endereco);
                 listaSeguradoras.add(seguradora);
-                System.out.println("A seguradora " + seguradora.getNome() + "foi cadastrada!");
+                System.out.println("A seguradora " + seguradora.getNome() + " foi cadastrada!");
             }
 
             else if(opcao == 2){

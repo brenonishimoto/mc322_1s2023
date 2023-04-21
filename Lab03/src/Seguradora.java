@@ -55,10 +55,9 @@ public class Seguradora {
 		for(int i = 0; i < listaCliente.size();i++){
 			if(listaCliente.get(i).getCadastro().equals(cpf_cnpj)){
 				return listaCliente.get(i);
-			}else{
-				System.out.println("O Cliente não está cadastrado.");
 			}
 		}
+		System.out.println("O Cliente não está cadastrado.");
 		return null;
 	}
 
