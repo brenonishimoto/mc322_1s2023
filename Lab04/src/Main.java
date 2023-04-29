@@ -21,22 +21,76 @@ public class Main {
         scanner.nextLine();
         switch(opcao){
             case MenuOperacoes.CADASTRAR.getOperacao():
-
-        }
+                System.out.println("1 - Cadastrar Cliente PF/PJ");
+                System.out.println("2 - Cadastrar Veículo");
+                System.out.println("3 - Cadastrar Seguradora");
+                System.out.println("4 - Voltar");
+                opcao = scanner.nextInt();
+                scanner.nextLine();
+                switch(opcao){
+                    case MenuCadastro.CLIENTE.getOperacao():
+                    //ALGO
+                    case MenuCadastro.VEICULO.getOperacao():
+                    //ALGO
+                    case MenuCadastro.SEGURADORA.getOperacao():
+                    //ALGO
+                    case MenuCadastro.VOLTAR.getOperacao():
+                    //ALGO
+                }
+            case MenuOperacoes.LISTAR.getOperacao():
+                System.out.println("1 - Listar Cliente (PF/PJ) por Seguradora");
+                System.out.println("2 - Listar Sinistro por Seguradora");
+                System.out.println("3 - Listar Sinistro por Cliente");
+                System.out.println("4 - Listar Veiculo por Cliente");
+                System.out.println("5 - Listar Veiculo por Seguradora");
+                System.out.println("6 - Voltar");
+                opcao = scanner.nextInt();
+                scanner.nextLine();
+                switch(opcao){
+                    case MenuListar.CLIENTE_POR_SEGURADORA.getOperacao():
+                    //ALGO
+                    case MenuListar.SINISTRO_POR_SEGURADORA.getOperacao():
+                    //ALGO
+                    case MenuListar.SINISTRO_POR_CLIENTE.getOperacao():
+                    //ALGO
+                    case MenuListar.VEICULO_POR_CLIENTE.getOperacao():
+                    //ALGO
+                    case MenuListar.VEICULO_POR_SEGURADORA.getOperacao():
+                    //ALGO
+                    case MenuListar.VOLTAR.getOperacao():
+                    //ALGO
+                }
+            case MenuOperacoes.EXCLUIR.getOperacao():
+                System.out.println("1 - Excluir Cliente");
+                System.out.println("2 - Excluir Veiculo");
+                System.out.println("3 - Excluir Sinistro");
+                System.out.println("4 - Voltar");
+                opcao = scanner.nextInt();
+                scanner.nextLine();
+                switch(opcao){
+                    case MenuExcluir.CLIENTE.getOperacao():
+                    //ALGO
+                    case MenuExcluir.VEICULO.getOperacao():
+                    //ALGO
+                    case MenuExcluir.SINISTRO.getOperacao():
+                    //ALGO
+                    case MenuExcluir.VOLTAR.getOperacao():
+                    //ALGO
+                }
+            case MenuOperacoes.GERAR_SINISTRO.getOperacao():
+                //ALGO
+            case MenuOperacoes.TRANSFERIR_SEGURO.getOperacao():   
+                //Algo
+            case MenuOperacoes.CALCULAR_RECEITA_SEGURO.getOperacao():
+                //ALGO
+            case MenuOperacoes.SAIR.getOperacao():
+                System.exit(0);
+            }
     }
 
 
-    public static void main(String[] args) throws ParseException {
-        
-        switch (opcao = Scanner
-        case(MenuOperacoes.SAIR){
-            print 
-            scanner
-            case{
-
-            }
-            
-        
+    public static void main(String[] args) {
+                  
         Scanner scanner = new Scanner(System.in);
         ArrayList<Seguradora> listaSeguradoras = new ArrayList<Seguradora>();
         while (true){
