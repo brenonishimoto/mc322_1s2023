@@ -40,13 +40,24 @@ public class Cliente {
 	}
 
 	public double calculaScore(){
-		return 1.0;
+		return CalcSeguro.VALOR_BASE.getCalcSeguro();
 	}
 
 	public boolean cadastrarVeiculo(Veiculo veiculo){
 			listaVeiculos.add(veiculo);
 			return true;
 	}
+
+	public boolean removerVeiculo(String placa){
+		for(int i = 0; i < listaVeiculos.size();i++){
+			if(listaVeiculos.get(i).getPlaca().equals(placa)){
+				listaVeiculos.remove(i);
+				return true;
+			}
+		}
+		System.out.println("O Cliente não está cadastrado.");
+		return false;
+}
 
 	public ArrayList<Veiculo> getListaVeiculos(){
 		return listaVeiculos;

@@ -1,18 +1,18 @@
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class ClientePJ extends Cliente{
 	private final String cnpj;
-	private Date dataFundacao;
+	private LocalDate dataFundacao;
 	private int qtdeFuncionarios;
 	
 	// Construtor
 	public ClientePJ(String nome, String endereco, 
 					ArrayList <Veiculo> listaVeiculos, String cnpj, 
-					java.util.Date dataFundacao, int qtdeFuncionarios) {
+					LocalDate dataFundacao, int qtdeFuncionarios) {
 		super(nome, endereco);
 		this.cnpj = cnpj;
-		this.dataFundacao = (Date) dataFundacao;
+		this.dataFundacao = (LocalDate) dataFundacao;
 		this.qtdeFuncionarios = qtdeFuncionarios;
 		listaVeiculos = new ArrayList<Veiculo>();
 	}
@@ -22,11 +22,11 @@ public class ClientePJ extends Cliente{
 		return cnpj;
 	}
 
-	public Date getDataFundacao() {
+	public LocalDate getDataFundacao() {
 		return dataFundacao;
 	}
 	
-	public void setDataFundacao(Date dataFundacao) {
+	public void setDataFundacao(LocalDate dataFundacao) {
 		this.dataFundacao = dataFundacao;
 	}
 
@@ -39,7 +39,7 @@ public class ClientePJ extends Cliente{
 	}
 	
 	public double calculaScore(){
-		return 1.0;
+		return CalcSeguro.VALOR_BASE.getCalcSeguro() * (1 + (getQtdeFuncionarios()/100)) * getListaVeiculos().size();
 	}
 
 	@Override

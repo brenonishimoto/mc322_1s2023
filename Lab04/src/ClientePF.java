@@ -1,25 +1,26 @@
 import java.util.ArrayList;
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.Period;
 
 public class ClientePF extends Cliente{
 	private String cpf;
-	private Date dataNascimento;
-	private Date dataLicenca;
+	private LocalDate dataNascimento;
+	private LocalDate dataLicenca;
 	private String educacao;
 	private String genero;
 	private String classeEconomica;
 	
 	// Construtor
-	public ClientePF(String nome, String endereco, java.util.Date dataLicenca2,
+	public ClientePF(String nome, String endereco, LocalDate dataLicenca2,
 					String educacao, String genero, String classeEconomica,
-					ArrayList <Veiculo> listaVeiculos, String cpf, java.util.Date dataNascimento2) {
+					ArrayList <Veiculo> listaVeiculos, String cpf, LocalDate dataNascimento2) {
 		super(nome, endereco);
 		this.cpf = cpf;
-		this.dataLicenca = (Date) dataLicenca2;
+		this.dataLicenca = (LocalDate) dataLicenca2;
 		this.educacao = educacao;
 		this.genero = genero;
 		this.classeEconomica = classeEconomica;
-		this.dataNascimento = (Date) dataNascimento2;
+		this.dataNascimento = (LocalDate) dataNascimento2;
 		listaVeiculos = new ArrayList<Veiculo>();
 	}
 	
@@ -32,19 +33,19 @@ public class ClientePF extends Cliente{
 		this.cpf = cpf;
 	}
 
-	public Date getDataNascimento() {
+	public LocalDate getDataNascimento() {
 		return dataNascimento;
 	}
 	
-	public void setDataNascimento(Date dataNascimento) {
+	public void setDataNascimento(LocalDate dataNascimento) {
 		this.dataNascimento = dataNascimento;
 	}
 
-	public Date getDataLicenca() {
+	public LocalDate getDataLicenca() {
 		return dataLicenca;
 	}
 	
-	public void setDataLicenca(Date dataLicenca) {
+	public void setDataLicenca(LocalDate dataLicenca) {
 		this.dataLicenca = dataLicenca;
 	}
 	
@@ -73,7 +74,21 @@ public class ClientePF extends Cliente{
 	}
 	
 	public double calculaScore(){
-		return 1.0;
+		LocalDate hoje = LocalDate.now();
+		int idade = Period.between(dataNascimento, hoje).getYears();
+		double total_veiculos = getListaVeiculos().size();
+
+		if (idade >= 18 && idade < 30){
+			return CalcSeguro.VALOR_BASE.getCalcSeguro() * CalcSeguro.FATOR_18_30.getCalcSeguro() * total_veiculos;
+		}
+		else if (idade >= 30 && idade < 60){
+			return CalcSeguro.VALOR_BASE.getCalcSeguro() * CalcSeguro.FATOR_30_60.getCalcSeguro() * total_veiculos;
+		}
+		else if (idade >= 60 && idade < 90){
+			return CalcSeguro.VALOR_BASE.getCalcSeguro() * CalcSeguro.FATOR_60_90.getCalcSeguro() * total_veiculos;
+		}
+
+		return 0;
 	}
 
 	@Override
