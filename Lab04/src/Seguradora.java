@@ -142,8 +142,16 @@ public class Seguradora {
 			}
 		}
 
-	public void calcularPrecoSeguroCliente(Cliente cliente){
-		cliente.setValorSeguro(cliente.calculaScore() * (1 + listaSinistro.size()));
+	public double calcularPrecoSeguroCliente(Cliente cliente){
+		int contador = 0;
+		for (int i =0; i < listaSinistro.size(); i++){
+			if (cliente.getNome().equals(listaSinistro.get(i).getCliente().getNome())){
+				contador += 1;
+			}
+		}
+		cliente.setValorSeguro(cliente.calculaScore() * (1 + contador));
+		double preco_seguro_cliente = cliente.getValorSeguro();
+		return preco_seguro_cliente;
 	}
 
 	public double calculaReceita(){

@@ -72,6 +72,8 @@ public class Sinistro {
 		return "-------------------------------------- " + "\n" +
 			"Id = " + getId() + "\n" +
 			"Data = " + getData() + "\n" +
-			"Endereço = " + getEndereco() + "\n" ;
+			"Endereço = " + getEndereco() + "\n"  +
+			"Cliente = " + cliente.getNome() + "\n"  +
+			"Placa Carro = " + veiculo.getPlaca() + "\n";
 	} 
 }

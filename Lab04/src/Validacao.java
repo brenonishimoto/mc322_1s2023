@@ -129,8 +129,11 @@ public class Validacao {
     public static boolean validarNome(String nome){
         boolean valido = true;
 		nome = nome.replaceAll(" ", "");
-        if (!nome.substring(0,nome.length()).matches("[A-Z]*")){
-            valido = false;
+		for (int i = 0; i < nome.length(); i++){
+			if (Character.isLetter(nome.charAt(i)) == false){
+				valido = false;
+				return valido;
+			}
         }
         return valido;
     }
