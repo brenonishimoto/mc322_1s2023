@@ -175,6 +175,11 @@ public class Seguradora {
 		}
 		listaCliente.get(indice_destino).getListaVeiculos().addAll(listaCliente.get(indice_origem).getListaVeiculos());
 		listaCliente.get(indice_origem).getListaVeiculos().clear();
+		for(int i = 0; i < listaSinistro.size();i++){
+			if(listaSinistro.get(i).getCliente() == listaCliente.get(indice_origem)){
+				listaSinistro.get(i).setCliente(listaCliente.get(indice_destino));
+			}
+		}
 		calcularPrecoSeguroCliente(listaCliente.get(indice_destino));
 		calcularPrecoSeguroCliente(listaCliente.get(indice_origem));
 	}
