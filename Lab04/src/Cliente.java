@@ -43,11 +43,12 @@ public class Cliente {
 		return CalcSeguro.VALOR_BASE.getCalcSeguro();
 	}
 
+	//Adiciona Veiculo no cliente
 	public boolean cadastrarVeiculo(Veiculo veiculo){
 			listaVeiculos.add(veiculo);
 			return true;
 	}
-
+	//Remove veiculo do cliente
 	public boolean removerVeiculo(String placa){
 		for(int i = 0; i < listaVeiculos.size();i++){
 			if(listaVeiculos.get(i).getPlaca().equals(placa)){
@@ -63,6 +64,7 @@ public class Cliente {
 		return listaVeiculos;
 	}
 
+	//Lista veiculos
 	public void listarVeiculos(){
 		for (int i = 0; i < listaVeiculos.size();i++) 
 		{ 		      

@@ -1,5 +1,6 @@
 public class Validacao {
     
+	//Validar cpf
     public static boolean validarCPF(String cpf) {
 		boolean valido = true;
 		cpf = cpf.replaceAll("[^0-9]", "");
@@ -60,6 +61,7 @@ public class Validacao {
 		}
 	}
 
+	//Validar cnpj
     public static boolean validarCNPJ(String cnpj) {
 		boolean valido = true;
 		cnpj = cnpj.replaceAll("[^0-9]", "");
@@ -125,7 +127,7 @@ public class Validacao {
 			return valido;
 		}
 	}
-
+	//Validar nome (apenas letras)
     public static boolean validarNome(String nome){
         boolean valido = true;
 		nome = nome.replaceAll(" ", "");

@@ -51,6 +51,8 @@ public class Seguradora {
 		this.endereco = endereco;
 	}
 
+	//Encontra um Cliente
+
 	public Cliente encontrarCliente(String cpf_cnpj){
 		for(int i = 0; i < listaCliente.size();i++){
 			if(listaCliente.get(i).getCadastro().equals(cpf_cnpj)){
@@ -60,6 +62,8 @@ public class Seguradora {
 		System.out.println("O Cliente não está cadastrado.");
 		return null;
 	}
+
+	//Encontra o Sinistro
 
 	public Sinistro encontrarSinistro(int id){
 		for(int i = 0; i < listaSinistro.size();i++){
@@ -71,6 +75,8 @@ public class Seguradora {
 		}
 		return null;
 	}
+
+	//Adiciona um cliente 
 
 	public boolean cadastrarCliente(Cliente cliente) {
 		for(int i = 0; i < listaCliente.size(); i++){
@@ -84,6 +90,8 @@ public class Seguradora {
 		return true;
 	}
 
+	//Remove cliente dado um cpf/cnpj
+
 	public boolean removerCliente(String cpf_cnpj){
 		for(int i = 0; i < listaCliente.size();i++){
 			if(listaCliente.get(i).getNome().equals(cpf_cnpj)){
@@ -95,6 +103,8 @@ public class Seguradora {
 		System.out.println("O Cliente não está cadastrado.");
 		return false;
 	}
+
+	//Lista os clientes
 
 	public boolean listarClientes(){
 		if (listaCliente.size() == 0){
@@ -108,16 +118,23 @@ public class Seguradora {
 		return true;
 	}
 
+	//Adiciona o Sinistro e devolve o id
+
  	public boolean gerarSinistro(Sinistro sinistro){
 		listaSinistro.add(sinistro);
 		System.out.println("O Sinistro foi adicionado, o código de Identificação é: " + sinistro.getId());
 		return true;
 		}
- 
+
+	//Visualiza o Sinistro
+
 	public boolean visualizarSinistro(Sinistro sinistro){
 		System.out.println(sinistro.toString());
 		return true;
 	}
+
+	// Remove o Sinistro
+
 	public void removerSinistro(int id){
 		for(int i = 0; i < listaSinistro.size();i++){
 			if(listaSinistro.get(i).getId() == id){
@@ -127,7 +144,9 @@ public class Seguradora {
 			}
 		}
 	}
- 
+	
+	//Lista os sinistros
+
 	public boolean listarSinistros(){
 		for (int i = 0; i < listaSinistro.size();i++) 
 		{ 		      
@@ -136,11 +155,15 @@ public class Seguradora {
 		return true;
 	}
 
+	//Lista os veiculos
+
 	public void listarVeiculosSeg(){
 		for(int i = 0; i < listaCliente.size();i++){
 			listaCliente.get(i).listarVeiculos();
 			}
 		}
+	
+	//Calcula o preço do seguro de cada cliente e altera o valor do seguro dentro do objeto.
 
 	public double calcularPrecoSeguroCliente(Cliente cliente){
 		int contador = 0;
@@ -154,6 +177,8 @@ public class Seguradora {
 		return preco_seguro_cliente;
 	}
 
+	//Calcular a receita da Seguradora somando os seguros
+
 	public double calculaReceita(){
 		double receita = 0;
 		for(int i = 0; i < listaCliente.size();i++){
@@ -161,6 +186,8 @@ public class Seguradora {
 		}
 		return receita;
 	}
+
+	//Função de transferir seguro, copiando a lista no cliente alvo e depois alterando o cliente do Sinistro.
 
 	public void transferirSeguro(String cpf_cnpj_origem, String cpf_cnpj_destino){
 		int indice_origem = 0;

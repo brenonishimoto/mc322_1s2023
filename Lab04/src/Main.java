@@ -13,6 +13,9 @@ public class Main {
                  
         ArrayList<Seguradora> listaSeguradoras = new ArrayList<Seguradora>();
         Scanner scanner = new Scanner(System.in);
+        
+        // Instanciação e chamada de métodos
+
         System.out.println("-----------------Instanciamento de Seguradora-----------------");
         Seguradora seguradora_1 = new Seguradora("Seguradora 1", "(19)40028922", "seguradora1@gmail.com", "Rua da Seguradora 1");
         listaSeguradoras.add(seguradora_1);
@@ -85,6 +88,9 @@ public class Main {
         System.out.println("R$" + listaSeguradoras.get(0).calcularPrecoSeguroCliente(cliente_pj_1));
         System.out.println("-----------------Receita Seguradora-----------------");
         System.out.println("R$" + listaSeguradoras.get(0).calculaReceita());;
+        
+        //Fim da instanciação e chamada de métodos solicitados no Laboratório 4
+        //Inicio do menu em loop
 
         while (true){
         System.out.println("-----------------Menu-----------------");
@@ -208,6 +214,8 @@ public class Main {
             return;
         }
     }
+
+    //Funções do Menu
 
     public static void cadastrar_seguradora(Scanner scanner, ArrayList<Seguradora> listaSeguradoras){
         System.out.println("Nome da Seguradora:");
@@ -533,10 +541,46 @@ public class Main {
         System.out.println("Qual o CPF/CNPJ de origem?");
         String cpf_cnpj_origem = scanner.nextLine();
         cpf_cnpj_origem = cpf_cnpj_origem.replaceAll("[^0-9]", "");
+        if (cpf_cnpj_origem.length() == 14) {
+            if (Validacao.validarCNPJ(cpf_cnpj_origem) == false){
+                System.out.println("Coloque um CNPJ válido.");
+                return;
+            }
+        }else if (cpf_cnpj_origem.length() == 11) {
+            if (Validacao.validarCPF(cpf_cnpj_origem) == false){
+                System.out.println("Coloque um CPF válido.");
+                return;
+            }
+        }else if (cpf_cnpj_origem.length() != 11 ||cpf_cnpj_origem.length() != 14){
+            System.out.println("Coloque um CPF válido.");
+            return;
+        }
         System.out.println("Qual o CPF/CNPJ de destino?");
         String cpf_cnpj_destino = scanner.nextLine();
         cpf_cnpj_destino = cpf_cnpj_destino.replaceAll("[^0-9]", "");
+        if (cpf_cnpj_destino.length() == 14) {
+            if (Validacao.validarCNPJ(cpf_cnpj_destino) == false){
+                System.out.println("Coloque um CNPJ válido.");
+                return;
+            }
+        }else if (cpf_cnpj_destino.length() == 11) {
+            if (Validacao.validarCPF(cpf_cnpj_destino) == false){
+                System.out.println("Coloque um CPF válido.");
+                return;
+            }
+        }else if (cpf_cnpj_destino.length() != 11 ||cpf_cnpj_destino.length() != 14){
+            System.out.println("Coloque um CPF válido.");
+            return;
+        }
 
         listaSeguradoras.get(opcao - 1).transferirSeguro(cpf_cnpj_origem, cpf_cnpj_destino);;    
     }
 }
+
+/*
+        No laboratório 3 esqueci de instanciar os objetos e fazer um "teste automatico" mas as funções via menu
+    funcionavam. Nesse laboratório consertei esse esquecimento e alterei a forma de identificar a seguradora visto que
+    era bem cansativo.
+        Não coloquei a verificação de nome no cliente cnpj pois acredito que empresas podem possuir números em seus 
+    nomes, como poe exemplo a empresa Cloud9, que possui número em seu nome.
+*/
