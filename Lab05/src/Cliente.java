@@ -1,4 +1,3 @@
-import java.util.ArrayList;
 
 public abstract class Cliente {
 	protected String nome;
@@ -47,12 +46,10 @@ public abstract class Cliente {
 		this.email = email;
 	}
 
-	public abstract ArrayList<Sinistro> getSinistros();
-
-	public abstract ArrayList<Seguro> getSeguro();
-
 	public String toString() {
 		return "Nome = " + getNome() + "\n" +
-			"Endereço = " + getEndereco();
+		"Telefone = " + getTelefone() + "\n" +
+		"Endereço = " + getEndereco() + "\n" +
+		"E-mail = " + getEmail();
 	} 
 }

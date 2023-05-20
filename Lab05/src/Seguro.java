@@ -1,10 +1,9 @@
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Objects;
 
 public abstract class Seguro {
     protected static int contador = 1;
-	protected static final int id;
+	protected final int id;
     protected LocalDate dataInicio;
 	protected LocalDate dataFim;
     protected Seguradora seguradora;
@@ -13,12 +12,17 @@ public abstract class Seguro {
     protected int valorMensal;
 
     public Seguro(LocalDate dataInicio, LocalDate dataFim, Seguradora seguradora, ArrayList<Sinistro> listaSinistros, ArrayList<Condutor> listaCondutores, int valorMensal) {
+        this.id = Seguro.contador++;
         this.dataInicio = dataInicio;
         this.dataFim = dataFim;
         this.seguradora = seguradora;
         this.listaSinistros = listaSinistros;
         this.listaCondutores = listaCondutores;
         this.valorMensal = valorMensal;
+    }
+
+    public int getId(){
+        return id;
     }
 
     public LocalDate getDataInicio() {
@@ -69,7 +73,13 @@ public abstract class Seguro {
         this.valorMensal = valorMensal;
     }
 
-    
+    public abstract boolean desautorizarCondutor();
+
+    public abstract boolean autorizarCondutor();
+
+    public abstract double calcularValor();
+
+    public abstract boolean gerarSinistro();
 
     @Override
     public String toString() {

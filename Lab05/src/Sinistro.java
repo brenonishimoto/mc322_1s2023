@@ -1,21 +1,20 @@
+import java.time.LocalDate;
 
 public class Sinistro {
-	private String data;
-	private String endereco;
-	private Seguradora seguradora;
-	private Veiculo veiculo;
-	private Cliente cliente;
 	public static int contador = 1;
 	private final int id;
+	private LocalDate data;
+	private String endereco;
+	private Condutor condutor;
+	private Seguro seguro;
 
 	// Construtor
-	public Sinistro(String data, String endereco, Seguradora seguradora, Veiculo veiculo, Cliente cliente) {
+	public Sinistro(LocalDate data, String endereco, Condutor condutor, Seguro seguro) {
 		this.id = Sinistro.contador++;
 		this.data = data;
 		this.endereco = endereco;
-		this.seguradora = seguradora;
-		this.veiculo = veiculo;
-		this.cliente = cliente;
+		this.condutor = condutor;
+		this.seguro = seguro;
 	}
 	
 	//Getters e setters
@@ -24,15 +23,11 @@ public class Sinistro {
 		return id;
 	}
 	
-	public void setId(int id) {
-		this.id = id;
-	}
-	
-	public String getData() {
+	public LocalDate getData() {
 		return data;
 	}
 	
-	public void setData(String data) {
+	public void setData(LocalDate data) {
 		this.data = data;
 	}
 	
@@ -44,36 +39,28 @@ public class Sinistro {
 		this.endereco = endereco;
 	}
 
-	public Seguradora getSeguradora() {
-		return seguradora;
+	public Condutor getCondutor() {
+		return condutor;
 	}
 	
-	public void setSeguradora(Seguradora seguradora) {
-		this.seguradora = seguradora;
+	public void setCondutor(Condutor condutor) {
+		this.condutor = condutor;
 	}
 
-	public Cliente getCliente() {
-		return cliente;
+	public Seguro getSeguro() {
+		return seguro;
 	}
 	
-	public void setCliente(Cliente cliente) {
-		this.cliente = cliente;
-	}
-
-	public Veiculo getVeiculo() {
-		return veiculo;
-	}
-	
-	public void setVeiculo(Veiculo veiculo) {
-		this.veiculo = veiculo;
+	public void setSeguro(Seguro seguro) {
+		this.seguro = seguro;
 	}
 
 	public String toString() {
 		return "-------------------------------------- " + "\n" +
 			"Id = " + getId() + "\n" +
 			"Data = " + getData() + "\n" +
-			"Endereço = " + getEndereco() + "\n"  +
-			"Cliente = " + cliente.getNome() + "\n"  +
-			"Placa Carro = " + veiculo.getPlaca() + "\n";
+			"Endereço = " + getEndereco() + "\n" +
+			"Condutor = " + getCondutor() + "\n" +
+			"Seguro = " + getSeguro() + "\n";
 	} 
 }

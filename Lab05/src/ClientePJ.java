@@ -4,17 +4,16 @@ import java.util.ArrayList;
 public class ClientePJ extends Cliente{
 	private final String cnpj;
 	private LocalDate dataFundacao;
-	private int qtdeFuncionarios;
+	private ArrayList<Frota> listaFrota;
 	
 	// Construtor
-	public ClientePJ(String nome, String endereco, 
+	public ClientePJ(String nome, String telefone, String endereco, String email,
 					ArrayList <Veiculo> listaVeiculos, String cnpj, 
-					LocalDate dataFundacao, int qtdeFuncionarios) {
-		super(nome, endereco);
+					LocalDate dataFundacao) {
+		super(nome, telefone, endereco, email);
 		this.cnpj = cnpj;
 		this.dataFundacao = (LocalDate) dataFundacao;
-		this.qtdeFuncionarios = qtdeFuncionarios;
-		listaVeiculos = new ArrayList<Veiculo>();
+		listaFrota = new ArrayList<Frota>();
 	}
 	
 	//Getters e setters	
@@ -30,21 +29,20 @@ public class ClientePJ extends Cliente{
 		this.dataFundacao = dataFundacao;
 	}
 
-	public int getQtdeFuncionarios() {
-		return qtdeFuncionarios;
-	}
-	
-	public void setQtdeFuncionarios(int qtdeFuncionarios) {
-		this.qtdeFuncionarios = qtdeFuncionarios;
-	}
-	
-	public double calculaScore(){
-		return CalcSeguro.VALOR_BASE.getCalcSeguro() * (1 + (getQtdeFuncionarios()/100)) * getListaVeiculos().size();
+	public boolean cadastrarFrota(){
+		return true;
 	}
 
-	@Override
-	public String getCadastro(){
-		return this.cnpj;
+	public boolean atualizarFrota(){
+		return true;
+	}
+
+	public boolean getVeiculosPorFrota(){
+		return true;
+	}
+
+	public ArrayList<Frota> listaFrotas(){
+		return listaFrota;
 	}
 
 	@Override
@@ -53,7 +51,7 @@ public class ClientePJ extends Cliente{
 			"Nome = " + getNome() + "\n" +
 			"Cnpj = " + getCnpj() + "\n" +
 			"Endereço = " + getEndereco() + "\n" +
-			"Data de Fundação = " + getDataFundacao() + "\n" +
-			"Quantidade de Funcionários = " + getQtdeFuncionarios();
-	}  
+			"Data de Fundação = " + getDataFundacao();
+	}
+
 }
