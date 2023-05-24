@@ -6,6 +6,7 @@ public class ClientePF extends Cliente{
 	private String genero;
 	private String educacao;
 	private LocalDate dataNascimento;
+	private double qtd_sinistros_cliente;
 	private ArrayList<Veiculo> listaVeiculos;
 	
 	// Construtor
@@ -17,6 +18,7 @@ public class ClientePF extends Cliente{
 		this.genero = genero;
 		this.educacao = educacao;
 		this.dataNascimento = (LocalDate) dataNascimento;
+		qtd_sinistros_cliente = 0;
 		listaVeiculos = new ArrayList<Veiculo>();
 	}
 	
@@ -53,7 +55,15 @@ public class ClientePF extends Cliente{
 		this.genero = genero;
 	}
 
-	public ArrayList<Veiculo> listaVeiculos(){
+	public double getQtd_sinistros_cliente() {
+		return qtd_sinistros_cliente;
+	}
+	
+	public void setQtd_sinistros_cliente(double qtd_sinistros_cliente) {
+		this.qtd_sinistros_cliente = qtd_sinistros_cliente;
+	}
+
+	public ArrayList<Veiculo> getListaVeiculos(){
 		return listaVeiculos;
 	}
 
