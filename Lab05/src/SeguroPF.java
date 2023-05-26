@@ -7,13 +7,14 @@ public class SeguroPF extends Seguro{
     private ClientePF clientePF;
 
     //Construtor
-    public SeguroPF(int id, LocalDate dataInicio, LocalDate dataFim, 
-                    Seguradora seguradora, ArrayList<Sinistro> listaSinistros,
-                    ArrayList<Condutor> listaCondutores, int valorMensal, 
+    public SeguroPF( LocalDate dataInicio, LocalDate dataFim, 
+                    Seguradora seguradora,int valorMensal, 
                     Veiculo veiculo, ClientePF clientePF) {
-        super(dataInicio, dataFim, seguradora, listaSinistros, listaCondutores, valorMensal);
+        super(dataInicio, dataFim, seguradora, valorMensal);
         this.veiculo = veiculo;
         this.clientePF = clientePF;
+        listaSinistros = new ArrayList<Sinistro>();
+        listaCondutores = new ArrayList<Condutor>(); 
     }
 
     //Getters e Setters
@@ -49,7 +50,7 @@ public class SeguroPF extends Seguro{
 		int idade = Period.between(clientePF.getDataNascimento(), hoje).getYears();
 		double total_veiculos = clientePF.getListaVeiculos().size();
         double qtd_sinistros_cliente = clientePF.getQtd_sinistros_cliente();
-        double qtd_sinistros_condutor = listaSinistros.size();
+        double qtd_sinistros_condutor = Seguro.getQtd_sinistros_condutor();
         double fator = 0.0;
 		
         if (idade < 30){

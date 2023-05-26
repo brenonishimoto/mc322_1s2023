@@ -5,9 +5,9 @@ public class Frota {
     private ArrayList<Veiculo> listaVeiculos;
 
     // Construtor
-    public Frota(String code, ArrayList<Veiculo> listaVeiculos) {
+    public Frota(String code) {
         this.code = code;
-        this.listaVeiculos = listaVeiculos;
+        listaVeiculos = new ArrayList<Veiculo>();
     }
 
     //Getters e setters
@@ -28,6 +28,7 @@ public class Frota {
     }
 
     public boolean addVeiculo(Veiculo veiculo){
+        listaVeiculos.add(veiculo);
         return true;
     }
 

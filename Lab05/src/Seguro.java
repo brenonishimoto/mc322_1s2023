@@ -10,15 +10,17 @@ public abstract class Seguro {
     protected ArrayList<Sinistro> listaSinistros;
     protected ArrayList<Condutor> listaCondutores;
     protected int valorMensal;
+    protected static double qtd_sinistros_condutor;
 
-    public Seguro(LocalDate dataInicio, LocalDate dataFim, Seguradora seguradora, ArrayList<Sinistro> listaSinistros, ArrayList<Condutor> listaCondutores, int valorMensal) {
+    public Seguro(LocalDate dataInicio, LocalDate dataFim, Seguradora seguradora, int valorMensal) {
         this.id = Seguro.contador++;
         this.dataInicio = dataInicio;
         this.dataFim = dataFim;
         this.seguradora = seguradora;
-        this.listaSinistros = listaSinistros;
-        this.listaCondutores = listaCondutores;
         this.valorMensal = valorMensal;
+        listaSinistros = new ArrayList<Sinistro>();
+        listaCondutores = new ArrayList<Condutor>();
+        qtd_sinistros_condutor = 0;
     }
 
     public int getId(){
@@ -73,6 +75,14 @@ public abstract class Seguro {
         this.valorMensal = valorMensal;
     }
 
+    public static double getQtd_sinistros_condutor(){
+        return qtd_sinistros_condutor;
+    }
+
+    public void setQtd_sinistros_condutor(double qtd_sinistros_condutor){
+        Seguro.qtd_sinistros_condutor = qtd_sinistros_condutor;
+    }
+    
     public abstract boolean desautorizarCondutor();
 
     public abstract boolean autorizarCondutor();

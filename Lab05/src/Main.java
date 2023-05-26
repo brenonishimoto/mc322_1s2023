@@ -17,15 +17,12 @@ public class Main {
         // Instanciação e chamada de métodos
 
         System.out.println("-----------------Instanciamento de Seguradora-----------------");
-        Seguradora seguradora_1 = new Seguradora("Seguradora 1", "(19)40028922", "seguradora1@gmail.com", "Rua da Seguradora 1");
+        Seguradora seguradora_1 = new Seguradora("15.693.842/0001-43", "Seguradora 1", "(19)40028922", "seguradora1@gmail.com", "Rua da Seguradora 1");
         listaSeguradoras.add(seguradora_1);
         System.out.println("A seguradora '" + seguradora_1.getNome() + "' foi adicionada!");
         DateTimeFormatter formatador = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        String dataLicencaStr = "06/05/2015";
         String dataNascimentoStr = "12/12/1990";
-        LocalDate dataLicenca = LocalDate.parse(dataLicencaStr, formatador);
         LocalDate dataNascimento = LocalDate.parse(dataNascimentoStr, formatador);
-        ArrayList<Veiculo> listaVeiculos_1 = new ArrayList<Veiculo>();
         String cpf = "645.787.838-55";
         cpf = cpf.replaceAll("[^0-9]", "");
         if (Validacao.validarCPF(cpf) == false){
@@ -40,11 +37,10 @@ public class Main {
             System.exit(1);
         }
         System.out.println("-----------------Instanciamento de Cliente PF-----------------");
-        Cliente cliente_pf_1 = new ClientePF(nome_1, "Rua do Guilherme", dataLicenca, "Ensino Superior", "Masculino" , "Classe Média", listaVeiculos_1, cpf, dataNascimento);
+        ClientePF cliente_pf_1 = new ClientePF(nome_1, "(71)3244-0891","Rua do Guilherme", "guilherme@gmail.com", "Ensino Superior" , "Masculino", cpf, dataNascimento);
         listaSeguradoras.get(0).cadastrarCliente(cliente_pf_1);
         String dataFundacaoStr = "13/04/2012";
         LocalDate dataFundacao = LocalDate.parse(dataFundacaoStr, formatador);
-        ArrayList<Veiculo> listaVeiculos_2 = new ArrayList<Veiculo>();
         String cnpj = "15.409.786/0001-72";
         cnpj = cnpj.replaceAll("[^0-9]", "");
         if (Validacao.validarCNPJ(cnpj) == false){
@@ -54,16 +50,22 @@ public class Main {
         }
         String nome_2 = "Rito Gomes";
         System.out.println("-----------------Instanciamento de Cliente PJ-----------------");
-        Cliente cliente_pj_1 = new ClientePJ(nome_2, "Rua da Rito Gomes", listaVeiculos_2, cnpj, dataFundacao, 4000);
+        ClientePJ cliente_pj_1 = new ClientePJ(nome_2,"(19)3521-5841", "Rua da Rito Gomes", "ritogomes@gmail.com", cnpj, dataFundacao);
         listaSeguradoras.get(0).cadastrarCliente(cliente_pj_1);
+        System.out.println("-----------------Instanciamento de Frota-----------------");
+        Frota frota_1 = new Frota("Frota 1");
+        cliente_pj_1.cadastrarFrota(frota_1);
         System.out.println("-----------------Instanciamento do Veiculo 1-----------------");
         Veiculo veiculo_1 = new Veiculo("BRA2E19", "Chevrolet", "Celta", 2015);
-        cliente_pf_1.cadastrarVeiculo(veiculo_1);
+        cliente_pf_1.cadastrar_veiculo(veiculo_1);
         System.out.println("O veículo foi instanciado");
         System.out.println("-----------------Instanciamento do Veiculo 2-----------------");
         Veiculo veiculo_2 = new Veiculo("RIO2A18", "Ford", "Focus", 2019);
-        cliente_pj_1.cadastrarVeiculo(veiculo_2);
+        frota_1.addVeiculo(veiculo_2);
         System.out.println("O veículo foi instanciado");
+        System.out.println("-----------------Instanciamento do SeguroPF -----------------");
+        SeguroPF seguropf_1 = new SeguroPF(0, dataNascimento, dataFundacao, seguradora_1, null, null, 0, veiculo_2, cliente_pf_1)
+        System.out.println("-----------------Instanciamento do SeguroPJ -----------------");
         System.out.println("-----------------Instanciamento do Sinistro 1-----------------");
         Sinistro sinistro_1 = new Sinistro("21/07/2016", "Rua do Acidente 1", listaSeguradoras.get(0),
                                     cliente_pf_1.getListaVeiculos().get(0),

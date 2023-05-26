@@ -12,7 +12,7 @@ public class ClientePF extends Cliente{
 	// Construtor
 	public ClientePF(String nome, String telefone, String endereco, String email,
 					String educacao, String genero, String cpf,
-					ArrayList <Veiculo> listaVeiculos, LocalDate dataNascimento) {
+					LocalDate dataNascimento) {
 		super(nome, telefone, endereco, email);
 		this.cpf = cpf;
 		this.genero = genero;
@@ -65,6 +65,14 @@ public class ClientePF extends Cliente{
 
 	public ArrayList<Veiculo> getListaVeiculos(){
 		return listaVeiculos;
+	}
+
+	public boolean cadastrar_veiculo(Veiculo veiculo){
+		return true;
+	}
+
+	public boolean remover_veiculo(Veiculo veiculo){
+		return true;
 	}
 
 	@Override
