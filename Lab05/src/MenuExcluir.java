@@ -1,8 +1,7 @@
 public enum MenuExcluir {
     CLIENTE(1),
     VEICULO(2),
-    SINISTRO(3),
-    VOLTAR(4);
+    VOLTAR(3);
 
     public final int operacao;
 

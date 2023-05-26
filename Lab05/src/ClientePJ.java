@@ -11,12 +11,12 @@ public class ClientePJ extends Cliente{
 
 	// Construtor
 	public ClientePJ(String nome, String telefone, String endereco, String email,
-					String cnpj, LocalDate dataFundacao) {
+					String cnpj,int qtd_funcionarios, LocalDate dataFundacao) {
 		super(nome, telefone, endereco, email);
 		this.cnpj = cnpj;
 		this.dataFundacao = (LocalDate) dataFundacao;
+		this.qtd_funcionarios = qtd_funcionarios;
 		listaFrota = new ArrayList<Frota>();
-		qtd_funcionarios = 0;
 		qtd_veiculos = 0;
 		qtd_sinistros_cliente = 0;
 	}
@@ -56,6 +56,11 @@ public class ClientePJ extends Cliente{
 
 	public void setQtd_sinistros_cliente(double qtd_sinistros_cliente){
 		this.qtd_sinistros_cliente = qtd_sinistros_cliente;
+	}
+
+	@Override
+	public String getCadastro(){
+		return cnpj;
 	}
 
 	public boolean cadastrarFrota(Frota frota){

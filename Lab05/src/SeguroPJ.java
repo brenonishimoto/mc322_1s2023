@@ -1,6 +1,5 @@
 import java.time.LocalDate;
 import java.time.Period;
-import java.util.ArrayList;
 
 public class SeguroPJ extends Seguro{
     private Frota frota;
@@ -8,14 +7,12 @@ public class SeguroPJ extends Seguro{
     
 
     //Construtor
-    public SeguroPJ(int id, LocalDate dataInicio, LocalDate dataFim, 
-                    Seguradora seguradora, int valorMensal, 
-                    Frota frota, ClientePJ clientePJ) {
-        super(dataInicio, dataFim, seguradora, valorMensal);
+    public SeguroPJ(LocalDate dataInicio, LocalDate dataFim, 
+                    Seguradora seguradora, Frota frota,
+                    ClientePJ clientePJ) {
+        super(dataInicio, dataFim, seguradora);
         this.frota = frota;
         this.clientePJ = clientePJ;
-        listaSinistros = new ArrayList<Sinistro>();
-        listaCondutores = new ArrayList<Condutor>();
     }
 
     //Getters e Setters
@@ -36,12 +33,21 @@ public class SeguroPJ extends Seguro{
     }
 
     @Override
-    public boolean desautorizarCondutor() {
-        return true;
+    public boolean desautorizarCondutor(String cpf) {
+        for(int i = 0; i < listaCondutores.size();i++){
+			if(listaCondutores.get(i).getCpf().equals(cpf)){
+				listaCondutores.remove(i);
+				System.out.println("O Condutor foi removido.");
+				return true;
+			}
+		}
+		System.out.println("O Condutor não está cadastrado.");
+		return false;
     }
 
     @Override
-    public boolean autorizarCondutor() {
+    public boolean autorizarCondutor(Condutor condutor) {
+        listaCondutores.add(condutor);
         return true;
     }
 
@@ -58,8 +64,11 @@ public class SeguroPJ extends Seguro{
                 (2 + qtd_sinistros_cliente/10) * (5 + qtd_sinistros_condutor/10));
     }
 
+    //Adiciona o Sinistro e devolve o id
     @Override
-    public boolean gerarSinistro() {
-        return true;
-    }
+ 	public boolean gerarSinistro(Sinistro sinistro){
+		getListaSinistros().add(sinistro);
+		System.out.println("O Sinistro foi adicionado, o código de Identificação é: " + sinistro.getId());
+		return true;
+		}
 }

@@ -46,6 +46,10 @@ public abstract class Cliente {
 		this.email = email;
 	}
 
+	public String getCadastro(){
+		return null;
+	}
+
 	public String toString() {
 		return "Nome = " + getNome() + "\n" +
 		"Telefone = " + getTelefone() + "\n" +

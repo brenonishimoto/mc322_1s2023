@@ -33,8 +33,23 @@ public class Frota {
     }
 
     public boolean removeVeiculo(Veiculo veiculo){
-        return true;
+        for (int i =0; i<listaVeiculos.size();i++){
+			if(listaVeiculos.get(i).equals(veiculo)){
+				listaVeiculos.remove(i);
+				return true;
+			}
+		}
+		return false;
     }
+
+    public Veiculo encontra_veiculo(String placa){
+		for (int i =0; i<listaVeiculos.size();i++){
+			if(listaVeiculos.get(i).getPlaca().equals(placa)){
+				return listaVeiculos.get(i);
+			}
+		}
+		return null;
+	}
 
     @Override
     public String toString() {

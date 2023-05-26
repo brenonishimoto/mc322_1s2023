@@ -63,16 +63,37 @@ public class ClientePF extends Cliente{
 		this.qtd_sinistros_cliente = qtd_sinistros_cliente;
 	}
 
+	@Override
+	public String getCadastro(){
+		return cpf;
+	}
+
 	public ArrayList<Veiculo> getListaVeiculos(){
 		return listaVeiculos;
 	}
 
 	public boolean cadastrar_veiculo(Veiculo veiculo){
+		listaVeiculos.add(veiculo);
 		return true;
 	}
 
 	public boolean remover_veiculo(Veiculo veiculo){
-		return true;
+		for (int i =0; i<listaVeiculos.size();i++){
+			if(listaVeiculos.get(i).equals(veiculo)){
+				listaVeiculos.remove(i);
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public Veiculo encontra_veiculo(String placa){
+		for (int i =0; i<listaVeiculos.size();i++){
+			if(listaVeiculos.get(i).getPlaca().equals(placa)){
+				return listaVeiculos.get(i);
+			}
+		}
+		return null;
 	}
 
 	@Override

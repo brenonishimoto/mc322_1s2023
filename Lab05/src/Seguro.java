@@ -9,15 +9,15 @@ public abstract class Seguro {
     protected Seguradora seguradora;
     protected ArrayList<Sinistro> listaSinistros;
     protected ArrayList<Condutor> listaCondutores;
-    protected int valorMensal;
+    protected double valorMensal;
     protected static double qtd_sinistros_condutor;
 
-    public Seguro(LocalDate dataInicio, LocalDate dataFim, Seguradora seguradora, int valorMensal) {
+    public Seguro(LocalDate dataInicio, LocalDate dataFim, Seguradora seguradora) {
         this.id = Seguro.contador++;
         this.dataInicio = dataInicio;
         this.dataFim = dataFim;
         this.seguradora = seguradora;
-        this.valorMensal = valorMensal;
+        valorMensal = 0.0;
         listaSinistros = new ArrayList<Sinistro>();
         listaCondutores = new ArrayList<Condutor>();
         qtd_sinistros_condutor = 0;
@@ -67,8 +67,8 @@ public abstract class Seguro {
         this.listaCondutores = listaCondutores;
     }
 
-    public int getValorMensal() {
-        return this.valorMensal;
+    public double getValorMensal() {
+        return valorMensal;
     }
 
     public void setValorMensal(int valorMensal) {
@@ -83,13 +83,13 @@ public abstract class Seguro {
         Seguro.qtd_sinistros_condutor = qtd_sinistros_condutor;
     }
     
-    public abstract boolean desautorizarCondutor();
+    public abstract boolean desautorizarCondutor(String cpf);
 
-    public abstract boolean autorizarCondutor();
+    public abstract boolean autorizarCondutor(Condutor condutor);
 
     public abstract double calcularValor();
 
-    public abstract boolean gerarSinistro();
+    public abstract boolean gerarSinistro(Sinistro sinistro);
 
     @Override
     public String toString() {
