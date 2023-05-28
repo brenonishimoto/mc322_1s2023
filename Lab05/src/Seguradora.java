@@ -91,7 +91,9 @@ public class Seguradora {
 	
 	//Gerar Seguro
 	
-	public boolean gerarSeguro(){
+	public boolean gerarSeguro(Seguro seguro){
+		listaSeguros.add(seguro);
+		System.out.println("O seguro "+ seguro.getId() +" foi criado.");
 		return true;
 	}
 	
@@ -117,7 +119,7 @@ public class Seguradora {
 			}
 		}
 		listaCliente.add(cliente);
-		System.out.println("O Cliente foi cadastrado.");
+		System.out.println("O Cliente "+ cliente.getNome() +" foi cadastrado.");
 		return true;
 	}
 	
@@ -145,6 +147,26 @@ public class Seguradora {
 		}
 		System.out.println("O Cliente não está cadastrado.");
 		return false;
+	}
+
+	// Cadastrar Condutor
+	
+	public boolean cadastrarCondutor(Condutor condutor) {
+		if (listaCondutores.size() == 0){
+			listaCondutores.add(condutor);
+			System.out.println("O Condutor "+ condutor.getNome() +" foi cadastrado.");
+			return true;
+		}
+
+		for(int i = 0; i < listaCondutores.size(); i++){
+			if(listaCondutores.get(i).getCadastro().equals(condutor.getCadastro())){
+				System.out.println("O Condutor já está cadastrado.");
+				return false;
+			}
+		}
+		listaCondutores.add(condutor);
+		System.out.println("O Condutor "+ condutor.getNome() +" foi cadastrado.");
+		return true;
 	}
 
 	//Encontra o Condutor
@@ -192,17 +214,13 @@ public class Seguradora {
 		ArrayList<Seguro> listaSegCliente = new ArrayList<Seguro>();
 		for (int i = 0; i < listaSeguros.size(); i++){
 			if (listaSeguros.get(i) instanceof SeguroPF){
-				for(Seguro seguroPF  : listaSeguros){
-					if (((SeguroPF)seguroPF).getClientePF().equals(cliente)){
-						listaSegCliente.add(seguroPF);
+					if (((SeguroPF)listaSeguros.get(i)).getClientePF().equals(cliente)){
+						listaSegCliente.add(listaSeguros.get(i));
 					}
-				}
 			}
 			if (listaSeguros.get(i) instanceof SeguroPJ){
-				for(Seguro seguroPJ  : listaSeguros){
-					if (((SeguroPJ)seguroPJ).getClientePJ().equals(cliente)){
-						listaSegCliente.add(seguroPJ);
-					}
+					if (((SeguroPJ)listaSeguros.get(i)).getClientePJ().equals(cliente)){
+						listaSegCliente.add(listaSeguros.get(i));
 				}
 			}
 		}
@@ -215,30 +233,27 @@ public class Seguradora {
 		ArrayList<Seguro> listaSegCliente = new ArrayList<Seguro>();
 		for (int i = 0; i < listaSeguros.size(); i++){
 			if (listaSeguros.get(i) instanceof SeguroPF){
-				for(Seguro seguroPF  : listaSeguros){
-					if (((SeguroPF)seguroPF).getClientePF().equals(cliente)){
-						listaSegCliente.add(seguroPF);
+					if (((SeguroPF)listaSeguros.get(i)).getClientePF().equals(cliente)){
+						listaSegCliente.add(listaSeguros.get(i));
 					}
-				}
 			}
 			if (listaSeguros.get(i) instanceof SeguroPJ){
-				for(Seguro seguroPJ  : listaSeguros){
-					if (((SeguroPJ)seguroPJ).getClientePJ().equals(cliente)){
-						listaSegCliente.add(seguroPJ);
-					}
+					if (((SeguroPJ)listaSeguros.get(i)).getClientePJ().equals(cliente)){
+						listaSegCliente.add(listaSeguros.get(i));
 				}
 			}
 		}
-		for (int i = 0; listaSegCliente.size(); i++){
 
+		for (int j = 0; j < listaSegCliente.size(); j++){
+			listaSinCliente.addAll(listaSegCliente.get(j).listaSinistros);
 		}
+
 		return listaSinCliente;
 	}
-	
 	//Calcular a receita da Seguradora somando os seguros
 
 	public double calculaReceita(){
-		double receita = 0;
+		double receita = 0.0;
 		for(int i = 0; i < listaSeguros.size();i++){
 			receita += listaSeguros.get(i).getValorMensal();
 		}

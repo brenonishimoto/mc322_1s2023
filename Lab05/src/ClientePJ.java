@@ -59,6 +59,14 @@ public class ClientePJ extends Cliente{
 		this.qtd_sinistros_cliente = qtd_sinistros_cliente;
 	}
 
+	public void aumenta_sinistro(){
+		qtd_sinistros_cliente += 1;
+	}
+
+	public void diminui_sinistro(){
+		qtd_sinistros_cliente -= 1;
+	}
+
 	@Override
 	public String getCadastro(){
 		return cnpj;
@@ -66,6 +74,7 @@ public class ClientePJ extends Cliente{
 
 	public boolean cadastrarFrota(Frota frota){
 		listaFrota.add(frota);
+		System.out.println("A frota "+ frota.getCode() +" foi cadastrada.");
 		return true;
 	}
 
@@ -101,6 +110,7 @@ public class ClientePJ extends Cliente{
             Veiculo veiculo = new Veiculo(placa, marca, modelo, anoFabricacao);
             listaFrotas().get(opcao_1 - 1).addVeiculo(veiculo);
             System.out.println("Veículo cadastrado com sucesso!");
+			qtd_veiculos += 1;
 			return true;
         }
 		if (opcao_2 == 2){
@@ -108,10 +118,12 @@ public class ClientePJ extends Cliente{
             String placa = scanner.nextLine();
             Veiculo veiculo = listaFrotas().get(opcao_1).encontra_veiculo(placa);
             listaFrotas().get(opcao_1).removeVeiculo(veiculo);
+			qtd_veiculos -= 1;
 			return true;
         }
 		if (opcao_2 == 3){
             listaFrotas().remove(opcao_1 - 1);
+			qtd_veiculos -= listaFrotas().get(opcao_1 - 1).getListaVeiculos().size();
 			return true;
         }
 		return false;
@@ -128,7 +140,7 @@ public class ClientePJ extends Cliente{
         if (opcao == 0){
             return false;
         }
-		listaFrotas().get(opcao - 1).getListaVeiculos();
+		System.out.println(listaFrotas().get(opcao - 1).getListaVeiculos());
 		return true;
 	}
 

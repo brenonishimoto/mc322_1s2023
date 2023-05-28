@@ -56,11 +56,11 @@ public class Sinistro {
 	}
 
 	public String toString() {
-		return "-------------------------------------- " + "\n" +
-			"Id = " + getId() + "\n" +
+		return "Id do Sinistro = " + getId() + "\n" +
+			"Id do Seguro = " + getSeguro().getId() + "\n" +
 			"Data = " + getData() + "\n" +
 			"Endereço = " + getEndereco() + "\n" +
-			"Condutor = " + getCondutor() + "\n" +
-			"Seguro = " + getSeguro() + "\n";
+			"Condutor : " + "\n" +
+			getCondutor().toString() ;
 	} 
 }

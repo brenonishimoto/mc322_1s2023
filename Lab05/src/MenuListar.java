@@ -1,8 +1,10 @@
 public enum MenuListar {
     CLIENTE_POR_SEGURADORA(1),
     SINISTRO_POR_CLIENTE(2),
-    VEICULO_POR_CLIENTE(3),
-    VOLTAR(4);
+    SEGURO_POR_CLIENTE(3),
+    VEICULO_POR_CLIENTE(4),
+    VEICULO_POR_FROTA(5),
+    VOLTAR(6);
     
     public final int operacao;
 

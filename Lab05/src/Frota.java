@@ -29,6 +29,7 @@ public class Frota {
 
     public boolean addVeiculo(Veiculo veiculo){
         listaVeiculos.add(veiculo);
+        System.out.println("O Veiculo "+ veiculo.getPlaca() +" foi adicionado a frota.");
         return true;
     }
 

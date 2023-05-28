@@ -36,7 +36,7 @@ public class SeguroPF extends Seguro{
         for(int i = 0; i < listaCondutores.size();i++){
 			if(listaCondutores.get(i).getCpf().equals(cpf)){
 				listaCondutores.remove(i);
-				System.out.println("O Condutor foi removido.");
+				System.out.println("O Condutor '" + listaCondutores.get(i).getNome() + "' foi desautorizado.");
 				return true;
 			}
 		}
@@ -47,11 +47,13 @@ public class SeguroPF extends Seguro{
     @Override
     public boolean autorizarCondutor(Condutor condutor) {
         listaCondutores.add(condutor);
+        setQtd_sinistros_condutor();
+        System.out.println("O Condutor '" + condutor.getNome() + "' foi autorizado.");
         return true;
     }
 
     @Override
-    public double calcularValor() {
+    public void calcularValor() {
         LocalDate hoje = LocalDate.now();
 		int idade = Period.between(clientePF.getDataNascimento(), hoje).getYears();
 		double total_veiculos = clientePF.getListaVeiculos().size();
@@ -69,7 +71,7 @@ public class SeguroPF extends Seguro{
 			fator =  CalcSeguro.FATOR_MAIOR_60.getCalcSeguro();
 		}
 
-		return CalcSeguro.VALOR_BASE.getCalcSeguro() * fator * (1 + 1/(total_veiculos+2)) * 
+		valorMensal =  CalcSeguro.VALOR_BASE.getCalcSeguro() * fator * (1 + 1/(total_veiculos+2)) * 
                 (2 + qtd_sinistros_cliente/10) * (5 + qtd_sinistros_condutor/10);
 	}
 
@@ -77,7 +79,19 @@ public class SeguroPF extends Seguro{
     @Override
  	public boolean gerarSinistro(Sinistro sinistro){
 		getListaSinistros().add(sinistro);
+        clientePF.aumenta_sinistro();
 		System.out.println("O Sinistro foi adicionado, o código de Identificação é: " + sinistro.getId());
 		return true;
 		}
+    
+    @Override
+    public String toString() {
+        return "Id = " + getId() + "\n" +
+            "Inicio= " + getDataInicio() + "\n" +
+            "Fim= " + getDataFim() + "\n" +
+            "Seguradora= " + getSeguradora().getNome() + "\n" +
+            "Cliente = " + getClientePF().getNome() + "\n" +
+            "Veiculo = " + getVeiculo().getPlaca() + "\n" +
+            "ValorMensal= " + getValorMensal() ;
+    }
 }

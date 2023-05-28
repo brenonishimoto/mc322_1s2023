@@ -79,28 +79,26 @@ public abstract class Seguro {
         return qtd_sinistros_condutor;
     }
 
-    public void setQtd_sinistros_condutor(double qtd_sinistros_condutor){
-        Seguro.qtd_sinistros_condutor = qtd_sinistros_condutor;
+    public void setQtd_sinistros_condutor(){
+        for(int i= 0; i< listaCondutores.size(); i++){
+            qtd_sinistros_condutor += listaCondutores.get(i).getListaSinistros().size();
+        }
     }
     
     public abstract boolean desautorizarCondutor(String cpf);
 
     public abstract boolean autorizarCondutor(Condutor condutor);
 
-    public abstract double calcularValor();
+    public abstract void calcularValor();
 
     public abstract boolean gerarSinistro(Sinistro sinistro);
 
-    @Override
     public String toString() {
-        return "{" +
-            " dataInicio='" + getDataInicio() + "'" +
-            ", dataFim='" + getDataFim() + "'" +
-            ", seguradora='" + getSeguradora() + "'" +
-            ", listaSinistros='" + getListaSinistros() + "'" +
-            ", listaCondutores='" + getListaCondutores() + "'" +
-            ", valorMensal='" + getValorMensal() + "'" +
-            "}";
+        return "Id = " + getId() + "\n" +
+            "Inicio = " + getDataInicio() + "\n" +
+            "Fim = " + getDataFim() + "\n" +
+            "Seguradora='" + getSeguradora().getNome() + "\n" +
+            "ValorMensal='" + getValorMensal() ;
     }
     
 }

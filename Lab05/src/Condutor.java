@@ -65,26 +65,29 @@ public class Condutor {
         this.dataNasc = dataNasc;
     }
 
+    public String getCadastro(){
+		return cpf;
+	}
+
     public ArrayList<Sinistro> getListaSinistros() {
         return this.listaSinistros;
     }
 
     public void  adicionarSinistro(Sinistro sinistro) {
         listaSinistros.add(sinistro);
+        System.out.println("O Sinistro foi adicionado ao condutor '"+ this.getNome() +"' .");
+        
     }
 
 
     @Override
     public String toString() {
-        return "{" +
-            " cpf='" + getCpf() + "'" +
-            ", nome='" + getNome() + "'" +
-            ", telefone='" + getTelefone() + "'" +
-            ", endereco='" + getEndereco() + "'" +
-            ", email='" + getEmail() + "'" +
-            ", dataNasc='" + getDataNasc() + "'" +
-            ", listaSinistros='" + getListaSinistros() + "'" +
-            "}";
+        return "Nome = " + getNome() + "\n" +
+            "CPF = " + getCpf() + "\n" +
+            "Telefone = " + getTelefone() + "\n" +
+            "Email = " + getEmail() + "\n" +
+            "Endereço = " + getEndereco() + "\n" +
+            "Data de Nascimento = " + getDataNasc() + "\n" ;
     }
     
 }

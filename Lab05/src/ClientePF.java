@@ -63,6 +63,14 @@ public class ClientePF extends Cliente{
 		this.qtd_sinistros_cliente = qtd_sinistros_cliente;
 	}
 
+	public void aumenta_sinistro(){
+		qtd_sinistros_cliente += 1;
+	}
+
+	public void diminui_sinistro(){
+		qtd_sinistros_cliente -= 1;
+	}
+
 	@Override
 	public String getCadastro(){
 		return cpf;
@@ -74,6 +82,7 @@ public class ClientePF extends Cliente{
 
 	public boolean cadastrar_veiculo(Veiculo veiculo){
 		listaVeiculos.add(veiculo);
+		System.out.println("O Veiculo "+ veiculo.getPlaca() +" foi cadastrado.");
 		return true;
 	}
 
