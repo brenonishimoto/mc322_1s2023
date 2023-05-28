@@ -1,5 +1,6 @@
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class ClientePJ extends Cliente{
 	private final String cnpj;
@@ -68,11 +69,66 @@ public class ClientePJ extends Cliente{
 		return true;
 	}
 
-	public boolean atualizarFrota(){
-		return true;
+	public boolean atualizarFrota(Scanner scanner){
+		System.out.println("Qual frota deseja atualizar?");
+        for (int i = 0; i < listaFrotas().size(); i++){
+            System.out.println( (i+1) + "." + listaFrotas().get(i).getCode());
+        }
+        System.out.println("0.Sair");
+        int opcao_1 = scanner.nextInt();
+        scanner.nextLine();
+        if (opcao_1 == 0){
+            return false;
+        }
+		System.out.println("1. Adicionar Veiculo");
+		System.out.println("2. Remover Veiculo");
+		System.out.println("3. Remover Frota");
+		System.out.println("0.Sair");
+        int opcao_2 = scanner.nextInt();
+        scanner.nextLine();
+        if (opcao_2 == 0){
+            return false;
+        }
+		if (opcao_2 == 1){
+            System.out.println("Qual a placa do carro?");
+            String placa = scanner.nextLine();
+            System.out.println("Qual a marca do carro?");
+            String marca = scanner.nextLine();
+            System.out.println("Qual o modelo do carro?");
+            String modelo = scanner.nextLine();
+            System.out.println("Qual o ano de Fabricação do carro?");
+            int anoFabricacao = scanner.nextInt();
+            Veiculo veiculo = new Veiculo(placa, marca, modelo, anoFabricacao);
+            listaFrotas().get(opcao_1 - 1).addVeiculo(veiculo);
+            System.out.println("Veículo cadastrado com sucesso!");
+			return true;
+        }
+		if (opcao_2 == 2){
+            System.out.println("Qual a placa do Carro?");
+            String placa = scanner.nextLine();
+            Veiculo veiculo = listaFrotas().get(opcao_1).encontra_veiculo(placa);
+            listaFrotas().get(opcao_1).removeVeiculo(veiculo);
+			return true;
+        }
+		if (opcao_2 == 3){
+            listaFrotas().remove(opcao_1 - 1);
+			return true;
+        }
+		return false;
 	}
 
-	public boolean getVeiculosPorFrota(){
+	public boolean getVeiculosPorFrota(Scanner scanner){
+		System.out.println("Qual frota deseja ver os veiculos?");
+        for (int i = 0; i < listaFrotas().size(); i++){
+            System.out.println( (i+1) + "." + listaFrotas().get(i).getCode());
+        }
+        System.out.println("0.Sair");
+        int opcao = scanner.nextInt();
+        scanner.nextLine();
+        if (opcao == 0){
+            return false;
+        }
+		listaFrotas().get(opcao - 1).getListaVeiculos();
 		return true;
 	}
 

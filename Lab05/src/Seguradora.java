@@ -206,12 +206,33 @@ public class Seguradora {
 				}
 			}
 		}
-		return null;
+		return listaSegCliente;
 	}
 	
 	//Retorna lista de Sinistros por Cliente
-	public ArrayList<Sinistro> getSinistrosPorCliente(){
-		return null;
+	public ArrayList<Sinistro> getSinistrosPorCliente(Cliente cliente){
+		ArrayList<Sinistro> listaSinCliente = new ArrayList<Sinistro>();
+		ArrayList<Seguro> listaSegCliente = new ArrayList<Seguro>();
+		for (int i = 0; i < listaSeguros.size(); i++){
+			if (listaSeguros.get(i) instanceof SeguroPF){
+				for(Seguro seguroPF  : listaSeguros){
+					if (((SeguroPF)seguroPF).getClientePF().equals(cliente)){
+						listaSegCliente.add(seguroPF);
+					}
+				}
+			}
+			if (listaSeguros.get(i) instanceof SeguroPJ){
+				for(Seguro seguroPJ  : listaSeguros){
+					if (((SeguroPJ)seguroPJ).getClientePJ().equals(cliente)){
+						listaSegCliente.add(seguroPJ);
+					}
+				}
+			}
+		}
+		for (int i = 0; listaSegCliente.size(); i++){
+
+		}
+		return listaSinCliente;
 	}
 	
 	//Calcular a receita da Seguradora somando os seguros
