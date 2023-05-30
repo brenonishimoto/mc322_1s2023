@@ -1,3 +1,4 @@
+//Enum para criação do menu cadastro.
 public enum MenuCadastro {
     CLIENTE(1),
     VEICULO(2),

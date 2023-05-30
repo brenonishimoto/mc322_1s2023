@@ -1,3 +1,4 @@
+//Enum para criação do menu excluir.
 public enum MenuExcluir {
     CLIENTE(1),
     VEICULO(2),

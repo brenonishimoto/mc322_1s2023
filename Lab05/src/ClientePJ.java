@@ -1,6 +1,6 @@
+//Classe filha de Cliente com getters, setters e métodos.
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class ClientePJ extends Cliente{
 	private final String cnpj;
@@ -11,6 +11,8 @@ public class ClientePJ extends Cliente{
 	private double qtd_sinistros_cliente;	
 
 	// Construtor
+	//	Foi-se adicionado a quantidade de veiculos e a quantidade de sinistros como forma de
+	//facilitar o calculo do valor do seguro.
 	public ClientePJ(String nome, String telefone, String endereco, String email,
 					String cnpj,int qtd_funcionarios, LocalDate dataFundacao) {
 		super(nome, telefone, endereco, email);
@@ -72,75 +74,51 @@ public class ClientePJ extends Cliente{
 		return cnpj;
 	}
 
+	//Método para encontrar frota utilizando o "nome".
+	public Frota encontraFrota(String code){
+		for (int i = 0; i < listaFrotas().size(); i++){
+			if (listaFrotas().get(i).getCode().equals(code)){
+				return listaFrotas().get(i);
+			}
+		}
+		return null;
+	}
+
+	//Cadastrar uma frota adicionando uma frota a lista de frotas.
 	public boolean cadastrarFrota(Frota frota){
 		listaFrota.add(frota);
 		System.out.println("A frota "+ frota.getCode() +" foi cadastrada.");
 		return true;
 	}
 
-	public boolean atualizarFrota(Scanner scanner){
-		System.out.println("Qual frota deseja atualizar?");
-        for (int i = 0; i < listaFrotas().size(); i++){
-            System.out.println( (i+1) + "." + listaFrotas().get(i).getCode());
-        }
-        System.out.println("0.Sair");
-        int opcao_1 = scanner.nextInt();
-        scanner.nextLine();
-        if (opcao_1 == 0){
-            return false;
-        }
-		System.out.println("1. Adicionar Veiculo");
-		System.out.println("2. Remover Veiculo");
-		System.out.println("3. Remover Frota");
-		System.out.println("0.Sair");
-        int opcao_2 = scanner.nextInt();
-        scanner.nextLine();
-        if (opcao_2 == 0){
-            return false;
-        }
-		if (opcao_2 == 1){
-            System.out.println("Qual a placa do carro?");
-            String placa = scanner.nextLine();
-            System.out.println("Qual a marca do carro?");
-            String marca = scanner.nextLine();
-            System.out.println("Qual o modelo do carro?");
-            String modelo = scanner.nextLine();
-            System.out.println("Qual o ano de Fabricação do carro?");
-            int anoFabricacao = scanner.nextInt();
-            Veiculo veiculo = new Veiculo(placa, marca, modelo, anoFabricacao);
-            listaFrotas().get(opcao_1 - 1).addVeiculo(veiculo);
-            System.out.println("Veículo cadastrado com sucesso!");
-			qtd_veiculos += 1;
-			return true;
-        }
-		if (opcao_2 == 2){
-            System.out.println("Qual a placa do Carro?");
-            String placa = scanner.nextLine();
-            Veiculo veiculo = listaFrotas().get(opcao_1).encontra_veiculo(placa);
-            listaFrotas().get(opcao_1).removeVeiculo(veiculo);
-			qtd_veiculos -= 1;
-			return true;
-        }
-		if (opcao_2 == 3){
-            listaFrotas().remove(opcao_1 - 1);
-			qtd_veiculos -= listaFrotas().get(opcao_1 - 1).getListaVeiculos().size();
-			return true;
-        }
-		return false;
+	// A função atualizar frota foi dividida em outras 3 com base em suas funções.
+
+	//Adicionar um veiculo a frota e aumenta o contador de veiculos do cliente
+	public boolean atualizarFrota_adicionar_veiculo(int id_frota, Veiculo veiculo){
+        listaFrotas().get(id_frota - 1).addVeiculo(veiculo);
+		qtd_veiculos += 1;
+		return true;
 	}
 
-	public boolean getVeiculosPorFrota(Scanner scanner){
-		System.out.println("Qual frota deseja ver os veiculos?");
-        for (int i = 0; i < listaFrotas().size(); i++){
-            System.out.println( (i+1) + "." + listaFrotas().get(i).getCode());
-        }
-        System.out.println("0.Sair");
-        int opcao = scanner.nextInt();
-        scanner.nextLine();
-        if (opcao == 0){
-            return false;
-        }
-		System.out.println(listaFrotas().get(opcao - 1).getListaVeiculos());
+	//Remove um veiculo da frota, encontrando-o por meio de um método e diminui o contador de veiculos do cliente.
+	public boolean atualizarFrota_remover_veiculo(int id_frota, String placa){
+		Veiculo veiculo = listaFrotas().get(id_frota).encontra_veiculo(placa);
+		listaFrotas().get(id_frota).removeVeiculo(veiculo);
+		qtd_veiculos -= 1;
+		return true;
+	}
+	
+	//Remove um frota inteira e remove a quantidade de veiculos do contador.
+	public boolean atualizarFrota_remover_frota(int id_frota){
+		qtd_veiculos -= listaFrotas().get(id_frota - 1).getListaVeiculos().size();
+		listaFrotas().remove(id_frota - 1);
+		return true;
+
+	}
+
+	//Imprime todos os veiculos de uma frota específica
+	public boolean getVeiculosPorFrota(int indice_frota){
+		System.out.println(listaFrotas().get(indice_frota).getListaVeiculos());
 		return true;
 	}
 

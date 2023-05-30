@@ -12,6 +12,7 @@ public class SeguroPF extends Seguro{
         super(dataInicio, dataFim, seguradora);
         this.veiculo = veiculo;
         this.clientePF = clientePF;
+        valorMensal = getValorMensal();
     }
 
     //Getters e Setters
@@ -52,11 +53,16 @@ public class SeguroPF extends Seguro{
         return true;
     }
 
+    //Método de calculo do Valor. A idade foi calculada por meio da função Period. O número de veiculos
+    //foi obtido pelo tamanho da lista de veiculos. A quantidade de sinistros do cliente e a quantidade
+    //de sinistros do condutor foram obtidos por contadores que são atualizados na geração dos sinistros,
+    //sendo o do condutor atualizado ao solicitar para calcular valor.
     @Override
-    public void calcularValor() {
+    public double calcularValor() {
         LocalDate hoje = LocalDate.now();
 		int idade = Period.between(clientePF.getDataNascimento(), hoje).getYears();
 		double total_veiculos = clientePF.getListaVeiculos().size();
+        setQtd_sinistros_condutor();
         double qtd_sinistros_cliente = clientePF.getQtd_sinistros_cliente();
         double qtd_sinistros_condutor = Seguro.getQtd_sinistros_condutor();
         double fator = 0.0;
@@ -73,13 +79,17 @@ public class SeguroPF extends Seguro{
 
 		valorMensal =  CalcSeguro.VALOR_BASE.getCalcSeguro() * fator * (1 + 1/(total_veiculos+2)) * 
                 (2 + qtd_sinistros_cliente/10) * (5 + qtd_sinistros_condutor/10);
+        
+        return valorMensal;
 	}
 
     //Adiciona o Sinistro e devolve o id
     @Override
- 	public boolean gerarSinistro(Sinistro sinistro){
-		getListaSinistros().add(sinistro);
+    public boolean gerarSinistro(LocalDate data, String endereco, Condutor condutor, Seguro seguro){
+		Sinistro sinistro = new Sinistro(data, endereco, condutor, seguro);
+        getListaSinistros().add(sinistro);
         clientePF.aumenta_sinistro();
+        condutor.getListaSinistros().add(sinistro);
 		System.out.println("O Sinistro foi adicionado, o código de Identificação é: " + sinistro.getId());
 		return true;
 		}

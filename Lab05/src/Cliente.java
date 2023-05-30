@@ -1,3 +1,4 @@
+// Classe abstrata Cliente com getters e setters.
 
 public abstract class Cliente {
 	protected String nome;

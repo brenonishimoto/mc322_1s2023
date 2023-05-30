@@ -1,3 +1,4 @@
+//Classe Frota com getters, setters e métodos.
 import java.util.ArrayList;
 
 public class Frota {
@@ -27,22 +28,26 @@ public class Frota {
         this.listaVeiculos = listaVeiculos;
     }
 
+    //Adiciona um veiculo a frota, chamado pela função atualizar frota do clientepj
     public boolean addVeiculo(Veiculo veiculo){
         listaVeiculos.add(veiculo);
         System.out.println("O Veiculo "+ veiculo.getPlaca() +" foi adicionado a frota.");
         return true;
     }
 
+        //Remove um veiculo da frota, chamado pela função atualizar frota do clientepj
     public boolean removeVeiculo(Veiculo veiculo){
         for (int i =0; i<listaVeiculos.size();i++){
 			if(listaVeiculos.get(i).equals(veiculo)){
-				listaVeiculos.remove(i);
+				System.out.println("O Veiculo "+ veiculo.getPlaca() +" foi removido da frota.");
+                listaVeiculos.remove(i);
 				return true;
 			}
 		}
 		return false;
     }
 
+    //Encontra um veiculo na frota
     public Veiculo encontra_veiculo(String placa){
 		for (int i =0; i<listaVeiculos.size();i++){
 			if(listaVeiculos.get(i).getPlaca().equals(placa)){

@@ -1,4 +1,4 @@
-
+//Classe de Veículo com getters e setters.
 public class Veiculo {
 	private String placa;
 	private String marca;

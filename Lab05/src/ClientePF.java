@@ -1,3 +1,5 @@
+//Classe filha de Cliente com getters, setters e métodos.
+
 import java.util.ArrayList;
 import java.time.LocalDate;
 
@@ -10,6 +12,7 @@ public class ClientePF extends Cliente{
 	private ArrayList<Veiculo> listaVeiculos;
 	
 	// Construtor
+	// Foi-se adicionado a variável qtd_sinistros_cliente para calculo do valor do seguro. 
 	public ClientePF(String nome, String telefone, String endereco, String email,
 					String educacao, String genero, String cpf,
 					LocalDate dataNascimento) {
@@ -63,14 +66,17 @@ public class ClientePF extends Cliente{
 		this.qtd_sinistros_cliente = qtd_sinistros_cliente;
 	}
 
+	//Método a ser chamado quando se é adicionado um sinistro ao Cliente (normalmente por meio dos condutores)
 	public void aumenta_sinistro(){
 		qtd_sinistros_cliente += 1;
 	}
 
+	//Método a ser chamado quando se é removido um sinistro ao Cliente (normalmente por meio dos condutores)
 	public void diminui_sinistro(){
 		qtd_sinistros_cliente -= 1;
 	}
 
+	//Método para obtenção do cpf 
 	@Override
 	public String getCadastro(){
 		return cpf;
@@ -80,12 +86,14 @@ public class ClientePF extends Cliente{
 		return listaVeiculos;
 	}
 
+	//Cadastramento do Veículo no cliente.
 	public boolean cadastrar_veiculo(Veiculo veiculo){
 		listaVeiculos.add(veiculo);
 		System.out.println("O Veiculo "+ veiculo.getPlaca() +" foi cadastrado.");
 		return true;
 	}
 
+	//Remoção do veiculo do cliente
 	public boolean remover_veiculo(Veiculo veiculo){
 		for (int i =0; i<listaVeiculos.size();i++){
 			if(listaVeiculos.get(i).equals(veiculo)){
@@ -96,6 +104,7 @@ public class ClientePF extends Cliente{
 		return false;
 	}
 
+	//Encontrar um veículo da Array list por meio da placa
 	public Veiculo encontra_veiculo(String placa){
 		for (int i =0; i<listaVeiculos.size();i++){
 			if(listaVeiculos.get(i).getPlaca().equals(placa)){

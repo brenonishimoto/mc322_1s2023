@@ -1,3 +1,4 @@
+//Classe com um conjunto de métodos para validação.
 public class Validacao {
     
 	//Validar cpf

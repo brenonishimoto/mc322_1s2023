@@ -1,3 +1,5 @@
+//Classe Seguradora com getters, setters e métodos
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class Seguradora {
@@ -11,6 +13,7 @@ public class Seguradora {
 	private ArrayList<Condutor> listaCondutores;
 
 	// Construtor
+	//Foi-se criado a lista de Condutores pois imagina-se que um condutor pode participar de seguros diferentes.
 	public Seguradora(String cnpj, String nome, String telefone, String email, String endereco) {
 		this.cnpj = cnpj;
 		this.nome = nome;
@@ -89,16 +92,25 @@ public class Seguradora {
 		return true;
 	}
 	
-	//Gerar Seguro
-	
-	public boolean gerarSeguro(Seguro seguro){
+	//Gerar SeguroPJ
+	public boolean gerarSeguroPJ(LocalDate inicio, LocalDate fim, Seguradora seguradora,
+								Frota frota, ClientePJ clientePJ){
+		SeguroPJ seguro = new SeguroPJ(inicio, fim, seguradora, frota, clientePJ);
+		listaSeguros.add(seguro);
+		System.out.println("O seguro "+ seguro.getId() +" foi criado.");
+		return true;
+	}
+
+	//Gerar SeguroPF
+	public boolean gerarSeguroPF(LocalDate inicio, LocalDate fim, Seguradora seguradora,
+								Veiculo veiculo, ClientePF clientePF){
+		SeguroPF seguro = new SeguroPF(inicio, fim, seguradora, veiculo, clientePF);
 		listaSeguros.add(seguro);
 		System.out.println("O seguro "+ seguro.getId() +" foi criado.");
 		return true;
 	}
 	
 	//Cancelar Seguro por id
-	
 	public boolean cancelarSeguro(int id){
 		for (int i = 0; i<listaSeguros.size();i++){
 			if(listaSeguros.get(i).getId() == id){
@@ -110,7 +122,6 @@ public class Seguradora {
 	}
 
 	// Cadastrar Cliente
-	
 	public boolean cadastrarCliente(Cliente cliente) {
 		for(int i = 0; i < listaCliente.size(); i++){
 			if(listaCliente.get(i).getCadastro().equals(cliente.getCadastro())){
@@ -123,8 +134,7 @@ public class Seguradora {
 		return true;
 	}
 	
-	//Encontra um Cliente
-	
+	//Encontra um Cliente pelo seu cpf/cnpj
 	public Cliente encontrarCliente(String cpf_cnpj){
 		for(int i = 0; i < listaCliente.size();i++){
 			if(listaCliente.get(i).getCadastro().equals(cpf_cnpj)){
@@ -136,7 +146,6 @@ public class Seguradora {
 	}
 
 	//Remove cliente dado um cpf/cnpj
-
 	public boolean removerCliente(String cpf_cnpj){
 		for(int i = 0; i < listaCliente.size();i++){
 			if(listaCliente.get(i).getNome().equals(cpf_cnpj)){
@@ -149,8 +158,7 @@ public class Seguradora {
 		return false;
 	}
 
-	// Cadastrar Condutor
-	
+	// Cadastrar Condutor	
 	public boolean cadastrarCondutor(Condutor condutor) {
 		if (listaCondutores.size() == 0){
 			listaCondutores.add(condutor);
@@ -169,8 +177,7 @@ public class Seguradora {
 		return true;
 	}
 
-	//Encontra o Condutor
-	
+	//Encontra um Condutor pelo seu cpf
 	public Condutor encontrarCondutor(String cpf){
 		for(int i = 0; i < listaCondutores.size();i++){
 			if(listaCondutores.get(i).getCpf() == cpf){
@@ -182,21 +189,17 @@ public class Seguradora {
 		return null;
 	}
 	
-	//Encontra o Seguro
-	
+	//Encontra um Seguro pelo seu id.
 	public Seguro encontrarSeguro(int id){
-		for(int i = 0; i < listaSeguros.size();i++){
+		for(int i = 0; i < listaSeguros.size(); i++){
 			if(listaSeguros.get(i).getId() == id){
 				return listaSeguros.get(i);
-			}else{
-				System.out.println("O Seguro não foi encontrado.");
 			}
 		}
 		return null;
 	}
 
-	//Encontra o Sinistro
-	
+	//Encontra um Sinistro pelo seu id
 	public Sinistro encontrarSinistro(int id){
 		for(int i = 0; i < listaSeguros.size();i++){
 			for(int j = 0; j <listaSeguros.get(i).getListaSinistros().size();j++){
@@ -208,8 +211,9 @@ public class Seguradora {
 		System.out.println("O Sinistro não foi encontrado.");
 		return null;
 	}
-
-	// Retornar lista de seguros por Cliente
+	
+	// 	 Retornar lista de seguros por Cliente, foi feito downcasting para isso, visto que, existem
+	// segurospf e segurospj
 	public ArrayList<Seguro> getSegurosPorCliente(Cliente cliente){
 		ArrayList<Seguro> listaSegCliente = new ArrayList<Seguro>();
 		for (int i = 0; i < listaSeguros.size(); i++){
@@ -227,7 +231,9 @@ public class Seguradora {
 		return listaSegCliente;
 	}
 	
-	//Retorna lista de Sinistros por Cliente
+	//	Retorna lista de Sinistros por Cliente. Foi-se utilizado um método semelhante para inicialmente
+	//fazer uma lista com apenas os seguros de um cliente e depois adicionou-se todos os sinistros de cada
+	//seguro em uma lista unica de sinistros.
 	public ArrayList<Sinistro> getSinistrosPorCliente(Cliente cliente){
 		ArrayList<Sinistro> listaSinCliente = new ArrayList<Sinistro>();
 		ArrayList<Seguro> listaSegCliente = new ArrayList<Seguro>();
@@ -250,6 +256,7 @@ public class Seguradora {
 
 		return listaSinCliente;
 	}
+	
 	//Calcular a receita da Seguradora somando os seguros
 
 	public double calculaReceita(){

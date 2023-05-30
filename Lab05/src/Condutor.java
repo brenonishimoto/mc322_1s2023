@@ -1,3 +1,4 @@
+//Classe condutor com getters, setters e métodos.
 import java.time.LocalDate;
 import java.util.ArrayList;
 
@@ -73,7 +74,8 @@ public class Condutor {
         return this.listaSinistros;
     }
 
-    public void  adicionarSinistro(Sinistro sinistro) {
+    //Adiciona um Sinistro a um condutor.
+    public void adicionarSinistro(Sinistro sinistro) {
         listaSinistros.add(sinistro);
         System.out.println("O Sinistro foi adicionado ao condutor '"+ this.getNome() +"' .");
         

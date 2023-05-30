@@ -1,3 +1,5 @@
+// Enum para identificação de fatores para calculo de valores.
+
 public enum CalcSeguro {
     VALOR_BASE(10.0),
     FATOR_MENOR_30(1.25),

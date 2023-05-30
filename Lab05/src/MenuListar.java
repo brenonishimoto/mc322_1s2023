@@ -1,3 +1,4 @@
+//Enum para criação do menu listar.
 public enum MenuListar {
     CLIENTE_POR_SEGURADORA(1),
     SINISTRO_POR_CLIENTE(2),

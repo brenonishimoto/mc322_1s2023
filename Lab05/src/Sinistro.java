@@ -1,3 +1,4 @@
+//Classe Sinistro com getters e setters.
 import java.time.LocalDate;
 
 public class Sinistro {
@@ -13,8 +14,8 @@ public class Sinistro {
 		this.id = Sinistro.contador++;
 		this.data = data;
 		this.endereco = endereco;
-		this.condutor = condutor;
 		this.seguro = seguro;
+		this.condutor = condutor;
 	}
 	
 	//Getters e setters

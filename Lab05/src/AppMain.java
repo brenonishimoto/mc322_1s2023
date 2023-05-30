@@ -24,11 +24,12 @@ public class AppMain {
         System.out.println("1 - Cadastrar");
         System.out.println("2 - Listar");
         System.out.println("3 - Excluir");
-        System.out.println("4 - Atualizar Frota");
-        System.out.println("5 - Autorizar/Desautorizar Condutor em um Seguro");
-        System.out.println("6 - Gerar Sinistro");
-        System.out.println("7 - Calcular Valor Mensal Seguro");
-        System.out.println("8 - Calcular Receita Seguradora");
+        System.out.println("4 - Gerar Seguro");
+        System.out.println("5 - Atualizar Frota");
+        System.out.println("6 - Autorizar/Desautorizar Condutor em um Seguro");
+        System.out.println("7 - Gerar Sinistro");
+        System.out.println("8 - Calcular Valor Mensal Seguro");
+        System.out.println("9 - Calcular Receita Seguradora");
         System.out.println("0 - Sair");
         
         int opcao = scanner.nextInt();
@@ -45,6 +46,9 @@ public class AppMain {
                 break;
             case EXCLUIR:
                 AppMain.excluir(scanner, listaSeguradoras);
+                break;
+            case GERAR_SEGURO:
+                gerar_seguro(scanner, listaSeguradoras);
                 break;
             case AUTORIZAR_DESAUTORIZAR_CONDUTOR:
                 autorizar_desautorizar_condutor(scanner, listaSeguradoras);
@@ -159,6 +163,7 @@ public class AppMain {
 
     //Funções do Menu
 
+    //Cadastra Seguradora e adiciona na lista de Seguradoras.
     public static void cadastrar_seguradora(Scanner scanner, ArrayList<Seguradora> listaSeguradoras){
         System.out.println("Qual o CNPJ da Seguradora:");
         String cnpj = scanner.nextLine();
@@ -179,6 +184,8 @@ public class AppMain {
         System.out.println("A seguradora " + seguradora.getNome() + " foi cadastrada!");
     }
 
+    //Cadastras Cliente, sendo a separação entre PF e PJ com base no tamanho do cpd/cnpj, e adiciona
+    //na lista de clientes da seguradora.
     public static void cadastrar_cliente(Scanner scanner, ArrayList<Seguradora> listaSeguradoras) throws ParseException{
         System.out.println("Qual seguradora o cliente pertence?");
         for (int i = 0; i < listaSeguradoras.size(); i++){
@@ -251,6 +258,9 @@ public class AppMain {
         }
     }
 
+    //Cadastra um veiculo, se for PF adiciona na lista de veiculos do cliente, se for PJ,
+    //pergunta-se qual a frota e adiciona o veiculo na frota. Para Clientes PJ a função é
+    //duplicado pois o atualiza frota também pode adicionar veiculos.
     public static void cadastrar_veiculo(Scanner scanner, ArrayList<Seguradora> listaSeguradoras){
         System.out.println("Qual seguradora o cliente pertence?");
         for (int i = 0; i < listaSeguradoras.size(); i++){
@@ -309,6 +319,7 @@ public class AppMain {
         }    
     }
     
+    //Cadastra um condutor e adiciona-o na lista de condutores da Seguradora.
     public static void cadastrar_condutor(Scanner scanner, ArrayList<Seguradora> listaSeguradoras){
         System.out.println("Qual seguradora o cliente pertence?");
         for (int i = 0; i < listaSeguradoras.size(); i++){
@@ -349,6 +360,7 @@ public class AppMain {
         return;
     }
 
+    //Cadastra uma frota, pergunta o CNPJ pois frota esta ligado a clientePJ.
     public static void cadastrar_frota(Scanner scanner, ArrayList<Seguradora> listaSeguradoras){
         System.out.println("Qual seguradora o cliente pertence?");
         for (int i = 0; i < listaSeguradoras.size(); i++){
@@ -370,6 +382,55 @@ public class AppMain {
         clientePJ.cadastrarFrota(frota);
     }
 
+    //Método para gerar seguro, separa-se em PJ e PF pela quantidade de numeros
+    //e adiciona-se a lista de Seguros.
+    public static void gerar_seguro(Scanner scanner, ArrayList<Seguradora> listaSeguradoras){
+        System.out.println("Qual seguradora o cliente pertence?");
+        for (int i = 0; i < listaSeguradoras.size(); i++){
+            System.out.println( (i+1) + "." + listaSeguradoras.get(i).getNome());
+        }
+        System.out.println("0.Sair");
+        int opcao = scanner.nextInt();
+        scanner.nextLine();
+        if (opcao == 0){
+            return;
+        }
+        System.out.println("Qual o CPF/CNPJ do Cliente?");
+        String cpf_cnpj = scanner.nextLine();
+        cpf_cnpj = cpf_cnpj.replaceAll("[^0-9]", "");
+        Cliente cliente = listaSeguradoras.get(opcao - 1).encontrarCliente(cpf_cnpj);
+        if (cliente == null){
+            return;
+        }
+        else if(cliente != null && cpf_cnpj.length() == 11){
+            ClientePF clientePF = (ClientePF) cliente;
+            System.out.println("Quando se inicia o seguro (XX/XX/XXXX)?");
+            String inicioStr = scanner.nextLine();
+            DateTimeFormatter formatador = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            LocalDate inicio = LocalDate.parse(inicioStr, formatador);
+            System.out.println("Quando se encerra o seguro (XX/XX/XXXX)?");
+            String fimStr = scanner.nextLine();
+            LocalDate fim = LocalDate.parse(fimStr, formatador);
+            System.out.println("Qual a placa do veiculo a ser segurado?");
+            String placa = scanner.nextLine();
+            listaSeguradoras.get(opcao - 1).gerarSeguroPF(inicio, fim,listaSeguradoras.get(opcao - 1) ,clientePF.encontra_veiculo(placa), clientePF);
+        }
+        else if(cliente != null && cpf_cnpj.length() == 14){
+            ClientePJ clientePJ = (ClientePJ) cliente;
+            System.out.println("Quando se inicia o seguro (XX/XX/XXXX)?");
+            String inicioStr = scanner.nextLine();
+            DateTimeFormatter formatador = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            LocalDate inicio = LocalDate.parse(inicioStr, formatador);
+            System.out.println("Quando se encerra o seguro (XX/XX/XXXX)?");
+            String fimStr = scanner.nextLine();
+            LocalDate fim = LocalDate.parse(fimStr, formatador);
+            System.out.println("Qual o ID da frota?");
+            String id = scanner.nextLine();
+            listaSeguradoras.get(opcao - 1).gerarSeguroPJ(inicio, fim,listaSeguradoras.get(opcao - 1) ,clientePJ.encontraFrota(id) , clientePJ);
+        }
+    } 
+
+    //Menu de atualizar frota, com possibilidade de adicionar e remover veiculo e remover frota.  
     public static void atualizar_frota(Scanner scanner, ArrayList<Seguradora> listaSeguradoras){
         System.out.println("Qual seguradora o cliente pertence?");
         for (int i = 0; i < listaSeguradoras.size(); i++){
@@ -389,11 +450,50 @@ public class AppMain {
             return;
         }
         else if (clientePJ != null){
-            clientePJ.atualizarFrota(scanner);
-            return;
+            System.out.println("Qual frota deseja atualizar?");
+            for (int i = 0; i < clientePJ.listaFrotas().size(); i++){
+                System.out.println( (i+1) + "." + clientePJ.listaFrotas().get(i).getCode());
+            }
+            System.out.println("0.Sair");
+            int opcao_1 = scanner.nextInt();
+            scanner.nextLine();
+            if (opcao_1 == 0){
+                return;
+            }
+            System.out.println("1. Adicionar Veiculo");
+            System.out.println("2. Remover Veiculo");
+            System.out.println("3. Remover Frota");
+            System.out.println("0. Sair");
+            int opcao_2 = scanner.nextInt();
+            scanner.nextLine();
+            if (opcao_2 == 0){
+                return;
+            }
+            if (opcao_2 == 1){
+                System.out.println("Qual a placa do carro?");
+                String placa = scanner.nextLine();
+                System.out.println("Qual a marca do carro?");
+                String marca = scanner.nextLine();
+                System.out.println("Qual o modelo do carro?");
+                String modelo = scanner.nextLine();
+                System.out.println("Qual o ano de Fabricação do carro?");
+                int anoFabricacao = scanner.nextInt();
+                Veiculo veiculo = new Veiculo(placa, marca, modelo, anoFabricacao);
+                clientePJ.atualizarFrota_adicionar_veiculo(opcao_1, veiculo);
+            }
+            if (opcao_2 == 2){
+                System.out.println("Qual a placa do Carro?");
+                String placa = scanner.nextLine();
+                clientePJ.atualizarFrota_remover_veiculo(opcao_1, placa);
+            }
+            if (opcao_2 == 3){
+                clientePJ.atualizarFrota_remover_frota(opcao_1);
+            }
         }
     }
 
+    // Gera um Sinistro, faz-se uma serie de perguntas para identificação do seguro e condutor
+    //relacionados ao sinistro. 
     public static void gerar_sinistro(Scanner scanner, ArrayList<Seguradora> listaSeguradoras){
         System.out.println("Qual seguradora o cliente pertence?");
         for (int i = 0; i < listaSeguradoras.size(); i++){
@@ -433,9 +533,7 @@ public class AppMain {
             LocalDate data = LocalDate.parse(dataStr, formatador);
             System.out.println("Qual o endereço do acidente?");
             String endereco = scanner.nextLine();
-            Sinistro sinistro = new Sinistro(data, endereco, condutor, seguroPF);
-            seguroPF.listaSinistros.add(sinistro);
-            condutor.getListaSinistros().add(sinistro);
+            seguroPF.gerarSinistro(data, endereco, condutor, seguroPF);
         }
         else if(cliente != null && cpf_cnpj.length() == 14){
             System.out.println("Qual o cpf do condutor?");
@@ -458,12 +556,11 @@ public class AppMain {
             LocalDate data = LocalDate.parse(dataStr, formatador);
             System.out.println("Qual o endereço do acidente?");
             String endereco = scanner.nextLine();
-            Sinistro sinistro = new Sinistro(data, endereco, condutor, seguroPJ);
-            seguroPJ.listaSinistros.add(sinistro);
-            condutor.getListaSinistros().add(sinistro);
+            seguroPJ.gerarSinistro(data, endereco, condutor, seguroPJ);
         }
     } 
     
+    //Remove um cliente da lista de clientes.
     public static void remover_cliente (Scanner scanner, ArrayList<Seguradora> listaSeguradoras){
         System.out.println("Qual seguradora o cliente pertence?");
         for (int i = 0; i < listaSeguradoras.size(); i++){
@@ -481,6 +578,8 @@ public class AppMain {
         listaSeguradoras.get(opcao - 1).removerCliente(cpf_cnpj);    
     }
 
+    //Remove um veiculo. Identifica-se se é PF ou PJ pela quantidade de numeros do registro
+    //Se for PF remove direto da lista, se for PJ identifica a frota e remove o veiculo.
     public static void remover_veiculo (Scanner scanner, ArrayList<Seguradora> listaSeguradoras){
         System.out.println("Qual seguradora o cliente pertence?");
         for (int i = 0; i < listaSeguradoras.size(); i++){
@@ -530,6 +629,7 @@ public class AppMain {
             }
         }
 
+    //Remmove um seguro da lista de seguros.
     public static void remover_seguro(Scanner scanner, ArrayList<Seguradora> listaSeguradoras){
         System.out.println("Qual seguradora o cliente pertence?");
         for (int i = 0; i < listaSeguradoras.size(); i++){
@@ -547,6 +647,7 @@ public class AppMain {
         listaSeguradoras.get(opcao - 1).cancelarSeguro(id);    
     }
 
+    //Adiciona e remove um condutor da lista de um seguro.
     public static void autorizar_desautorizar_condutor(Scanner scanner, ArrayList<Seguradora> listaSeguradoras){
         System.out.println("Qual seguradora o cliente pertence?");
         for (int i = 0; i < listaSeguradoras.size(); i++){
@@ -579,6 +680,7 @@ public class AppMain {
         }
     }
 
+    //Lista os clientes de uma seguradora
     public static void listar_clientes(Scanner scanner, ArrayList<Seguradora> listaSeguradoras){
         System.out.println("Qual seguradora o cliente pertence?");
         for (int i = 0; i < listaSeguradoras.size(); i++){
@@ -593,6 +695,7 @@ public class AppMain {
         listaSeguradoras.get(opcao - 1).listarClientes();    
     }
     
+    //Lista os sinistro de um cliente
     public static void listar_sinistro_por_cliente(Scanner scanner, ArrayList<Seguradora> listaSeguradoras){
         System.out.println("Qual seguradora o cliente pertence?");
         for (int i = 0; i < listaSeguradoras.size(); i++){
@@ -610,6 +713,7 @@ public class AppMain {
         System.out.println(listaSeguradoras.get(opcao - 1).getSinistrosPorCliente(cliente));
     }
 
+    //Lista os Seguros de um cliente
     public static void listar_seguro_por_cliente(Scanner scanner, ArrayList<Seguradora> listaSeguradoras){
         System.out.println("Qual seguradora o cliente pertence?");
         for (int i = 0; i < listaSeguradoras.size(); i++){
@@ -627,6 +731,7 @@ public class AppMain {
         System.out.println(listaSeguradoras.get(opcao - 1).getSegurosPorCliente(cliente));
     }
 
+    //Lista os veiculos de um cliente
     public static void listar_veiculos_cliente(Scanner scanner, ArrayList<Seguradora> listaSeguradoras){
         System.out.println("Qual seguradora o cliente pertence?");
         for (int i = 0; i < listaSeguradoras.size(); i++){
@@ -643,16 +748,17 @@ public class AppMain {
         cpf_cnpj = cpf_cnpj.replaceAll("[^0-9]", "");
         if (cpf_cnpj.length() == 11){
             ClientePF clientePF = (ClientePF) listaSeguradoras.get(opcao - 1).encontrarCliente(cpf_cnpj);
-            clientePF.getListaVeiculos();
+            System.out.println(clientePF.getListaVeiculos());
             }
         else if (cpf_cnpj.length() == 14){
             ClientePJ clientePJ = (ClientePJ) listaSeguradoras.get(opcao - 1).encontrarCliente(cpf_cnpj);
             for (int i = 0; i < clientePJ.listaFrotas().size(); i++ ){
-                clientePJ.listaFrotas().get(i).getListaVeiculos();
-            }
+                System.out.println(clientePJ.listaFrotas().get(i).getListaVeiculos());
+                }
             }   
     }
 
+    //Lista os veiculos de uma frota.
     public static void listar_veiculos_frota(Scanner scanner, ArrayList<Seguradora> listaSeguradoras){
         System.out.println("Qual seguradora o cliente pertence?");
         for (int i = 0; i < listaSeguradoras.size(); i++){
@@ -668,9 +774,20 @@ public class AppMain {
         String cnpj = scanner.nextLine();
         cnpj = cnpj.replaceAll("[^0-9]", "");
         ClientePJ clientePJ = (ClientePJ) listaSeguradoras.get(opcao - 1).encontrarCliente(cnpj);
-        clientePJ.getVeiculosPorFrota(scanner);
+        System.out.println("Qual frota deseja ver os veiculos?");
+        for (int i = 0; i < clientePJ.listaFrotas().size(); i++){
+            System.out.println( (i+1) + "." + clientePJ.listaFrotas().get(i).getCode());
+        }
+        System.out.println("0.Sair");
+        int opcao_2 = scanner.nextInt();
+        scanner.nextLine();
+        if (opcao_2 == 0){
+            return;
+        }
+        clientePJ.getVeiculosPorFrota(opcao_2 - 1);
     }
 
+    //Calcula o valor de um Seguro
     public static void calcular_valor_mensal(Scanner scanner, ArrayList<Seguradora> listaSeguradoras){
         System.out.println("Qual seguradora o cliente pertence?");
         for (int i = 0; i < listaSeguradoras.size(); i++){
@@ -686,9 +803,11 @@ public class AppMain {
         int id = scanner.nextInt();
         scanner.nextLine();
         listaSeguradoras.get(opcao - 1).encontrarSeguro(id).calcularValor();
-        System.out.println("R$" + listaSeguradoras.get(opcao - 1).encontrarSeguro(id).getValorMensal());
+        
+        System.out.printf( "R$ %.2f \n", listaSeguradoras.get(opcao - 1).encontrarSeguro(id).getValorMensal());
     }
 
+    // Calcula a receita de uma seguradora. Itera-se o valor
     public static void calcular_receita_seguro(Scanner scanner, ArrayList<Seguradora> listaSeguradoras){
         System.out.println("Qual seguradora o cliente pertence?");
         for (int i = 0; i < listaSeguradoras.size(); i++){
@@ -701,9 +820,10 @@ public class AppMain {
             return;
         }
         double receita = listaSeguradoras.get(opcao - 1).calculaReceita();
-        System.out.println(receita);
+        System.out.printf( "R$ %.2f \n", receita);
     }
 
+    // Instanciação de teste
     public static void teste(Scanner scanner, ArrayList<Seguradora> listaSeguradoras){
     // Instanciação e chamada de métodos
 
@@ -756,59 +876,59 @@ public class AppMain {
 
         System.out.println("-----------------Instanciamento do Veiculo na Frota do ClientePJ-----------------");
         Veiculo veiculo_2 = new Veiculo("RIO2A18", "Ford", "Focus", 2019);
-        frota_1.addVeiculo(veiculo_2);
+        cliente_pj_1.atualizarFrota_adicionar_veiculo(1, veiculo_2);
 
-        System.out.println("-----------------Instanciamento do SeguroPF -----------------");
         String dataInicioStr = "01/01/2010";
         LocalDate dataInicio = LocalDate.parse(dataInicioStr, formatador);
         String dataFimStr = "31/12/2010";
         LocalDate dataFim = LocalDate.parse(dataFimStr, formatador);
-        SeguroPF seguropf_1 = new SeguroPF(dataInicio,dataFim, seguradora_1,veiculo_1, cliente_pf_1);
-        listaSeguradoras.get(0).gerarSeguro(seguropf_1);
 
         System.out.println("-----------------Instanciamento do SeguroPJ -----------------");
-        SeguroPJ seguropj_1 = new SeguroPJ(dataInicio, dataFim, seguradora_1, frota_1, cliente_pj_1);
-        listaSeguradoras.get(0).gerarSeguro(seguropj_1);
+        listaSeguradoras.get(0).gerarSeguroPJ(dataInicio, dataFim, seguradora_1, frota_1, cliente_pj_1);
+        SeguroPJ seguropj_1 = (SeguroPJ) listaSeguradoras.get(0).encontrarSeguro(1);
+        
+        System.out.println("-----------------Instanciamento do SeguroPF -----------------");
+        listaSeguradoras.get(0).gerarSeguroPF(dataInicio, dataFim, seguradora_1, veiculo_1, cliente_pf_1);
+        SeguroPF seguropf_1 = (SeguroPF) listaSeguradoras.get(0).encontrarSeguro(2);
+
 
         System.out.println("-----------------Instanciamento do Condutor (SeguroPF)-----------------");
         Condutor condutor_1 = new Condutor("71356301657", "João", "(11)1111-1111","Rua do João", "joao@gmail.com", dataNascimento);
         listaSeguradoras.get(0).cadastrarCondutor(condutor_1);
+        seguropf_1.autorizarCondutor(condutor_1);
 
         System.out.println("-----------------Instanciamento do Condutor (SeguroPJ)-----------------");
         Condutor condutor_2 = new Condutor("21892605074", "Maria", "(22)2222-2222","Rua da Maria", "maria@gmail.com", dataNascimento);
         listaSeguradoras.get(0).cadastrarCondutor(condutor_2);
-        
+        seguropj_1.autorizarCondutor(condutor_2);
+
         System.out.println("-----------------Instanciamento do Sinistro PF-----------------");
         String dataSinistroStr = "05/05/2010";
         LocalDate dataSinistro = LocalDate.parse(dataSinistroStr, formatador);
-        Sinistro sinistro_1 = new Sinistro(dataSinistro,"Rua do Sinistro 1", condutor_1,seguropf_1);
-        seguropf_1.gerarSinistro(sinistro_1);
-        condutor_1.adicionarSinistro(sinistro_1);
-        
+        seguropf_1.gerarSinistro(dataSinistro, "Rua do Sinistro 1", condutor_1, seguropf_1);
+
         System.out.println("-----------------Instanciamento do Sinistro PJ-----------------");
-        Sinistro sinistro_2 = new Sinistro(dataSinistro, "Rua do Sinistro 2", condutor_2, seguropj_1);
-        seguropj_1.gerarSinistro(sinistro_2);
-        condutor_2.adicionarSinistro(sinistro_2);
+        seguropj_1.gerarSinistro(dataSinistro, "Rua do Sinistro 2", condutor_2, seguropj_1);
         
         System.out.println("-----------------Listar Clientes-----------------");
         listaSeguradoras.get(0).listarClientes();
         
         System.out.println("-----------------Sinistro 1-----------------");
-        listaSeguradoras.get(0).visualizarSinistro(sinistro_1);
+        listaSeguradoras.get(0).visualizarSinistro(listaSeguradoras.get(0).encontrarSinistro(1));
         
         System.out.println("-----------------Sinistro 2-----------------");
-        listaSeguradoras.get(0).visualizarSinistro(sinistro_2);
+        listaSeguradoras.get(0).visualizarSinistro(listaSeguradoras.get(0).encontrarSinistro(2));
         
         System.out.println("-----------------Valor Mensal SeguroPF----------------");
         seguropf_1.calcularValor();
-        System.out.println("R$" + seguropf_1.getValorMensal());
+        System.out.printf( "R$ %.2f \n", seguropf_1.getValorMensal());
         
         System.out.println("-----------------Valor Mensal SeguroPJ-----------------");
         seguropj_1.calcularValor();
-        System.out.println("R$" + seguropj_1.getValorMensal());
+        System.out.printf( "R$ %.2f \n", seguropj_1.getValorMensal());
         
         System.out.println("-----------------Calculo Receita da Seguradora-----------------");
-        System.out.println("R$" + listaSeguradoras.get(0).calculaReceita());
+        System.out.printf( "R$ %.2f \n", listaSeguradoras.get(0).calculaReceita());
 
         System.out.println("-----------------Listar Seguros por Cliente PF-----------------");
         System.out.println(listaSeguradoras.get(0).getSegurosPorCliente(cliente_pf_1));
