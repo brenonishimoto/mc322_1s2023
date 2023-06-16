@@ -1,7 +1,9 @@
-public interface I_Arquivo {
-    
-    Boolean gravarArquivo();
+import java.util.ArrayList;
 
-    String lerArquivo();
+public interface I_Arquivo<T> {
+    
+    Boolean gravarArquivo(T objeto);
+
+    ArrayList<String[]> lerArquivo();
     
 }
