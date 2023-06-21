@@ -89,7 +89,7 @@ public class ClientePF extends Cliente{
 	//Cadastramento do Veículo no cliente.
 	public boolean cadastrar_veiculo(Veiculo veiculo){
 		listaVeiculos.add(veiculo);
-		System.out.println("O Veiculo "+ veiculo.getPlaca() +" foi cadastrado.");
+		System.out.println("O Veiculo "+ veiculo.getPlaca() +" foi cadastrado no cliente.");
 		return true;
 	}
 

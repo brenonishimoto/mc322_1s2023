@@ -87,7 +87,7 @@ public class ClientePJ extends Cliente{
 	//Cadastrar uma frota adicionando uma frota a lista de frotas.
 	public boolean cadastrarFrota(Frota frota){
 		listaFrota.add(frota);
-		System.out.println("A frota "+ frota.getCode() +" foi cadastrada.");
+		System.out.println("A frota "+ frota.getCode() +" foi cadastrada no cliente.");
 		return true;
 	}
 

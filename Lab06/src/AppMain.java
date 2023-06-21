@@ -1,3 +1,4 @@
+import java.io.File;
 import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -67,6 +68,12 @@ public class AppMain {
                 break;
             case SAIR:
                 System.out.println("Até mais!");
+                
+                File file_1 = new File("lab06-seguradora_arquivos_v2/seguros.csv");
+                file_1.delete();
+                File file_2 = new File("lab06-seguradora_arquivos_v2/sinistros.csv");
+                file_2.delete();
+                
                 scanner.close();
                 System.exit(1);
             }
@@ -825,14 +832,7 @@ public class AppMain {
 
     // Instanciação de teste
     public static void teste(Scanner scanner, ArrayList<Seguradora> listaSeguradoras){
-    // Instanciação e chamada de métodos
-        /* 
-        System.out.println("1111111111111111111111");
-        ArquivoVeiculo s = new ArquivoVeiculo();
-        ArrayList<String[]> lista_veiculo = s.lerArquivo();
-        System.out.println(lista_veiculo.get(0)[0]);
-        System.out.println("22222222222222222222");
-        */
+        // Instanciação e chamada de métodos
 
         System.out.println("-----------------Instanciamento de Seguradora-----------------");
         Seguradora seguradora_1 = new Seguradora("15.693.842/0001-43", "Seguradora 1", "(19)40028922", "seguradora1@gmail.com", "Rua da Seguradora 1");
@@ -840,8 +840,8 @@ public class AppMain {
         System.out.println("A seguradora '" + seguradora_1.getNome() + "' foi adicionada!");
         
         System.out.println("-----------------Instanciamento de Cliente PF-----------------");
-        DateTimeFormatter formatador = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        String dataNascimentoStr = "12/12/1990";
+        DateTimeFormatter formatador = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        String dataNascimentoStr = "1990-12-12";
         LocalDate dataNascimento = LocalDate.parse(dataNascimentoStr, formatador);
         String cpf = "645.787.838-55";
         cpf = cpf.replaceAll("[^0-9]", "");
@@ -860,7 +860,7 @@ public class AppMain {
         listaSeguradoras.get(0).cadastrarCliente(cliente_pf_1);
         
         System.out.println("-----------------Instanciamento de Cliente PJ-----------------");
-        String dataFundacaoStr = "13/04/2012";
+        String dataFundacaoStr = "2012-04-13";
         LocalDate dataFundacao = LocalDate.parse(dataFundacaoStr, formatador);
         String cnpj = "15.409.786/0001-72";
         cnpj = cnpj.replaceAll("[^0-9]", "");
@@ -885,18 +885,15 @@ public class AppMain {
         Veiculo veiculo_2 = new Veiculo("RIO2A18", "Ford", "Focus", 2019);
         cliente_pj_1.atualizarFrota_adicionar_veiculo(1, veiculo_2);
         
-        String dataInicioStr = "01/01/2010";
+        String dataInicioStr = "2010-01-01";
         LocalDate dataInicio = LocalDate.parse(dataInicioStr, formatador);
-        String dataFimStr = "31/12/2010";
+        String dataFimStr = "2010-12-31";
         LocalDate dataFim = LocalDate.parse(dataFimStr, formatador);
         
         System.out.println("-----------------Instanciamento do SeguroPJ -----------------");
         listaSeguradoras.get(0).gerarSeguroPJ(dataInicio, dataFim, seguradora_1, frota_1, cliente_pj_1);
         SeguroPJ seguropj_1 = (SeguroPJ) listaSeguradoras.get(0).encontrarSeguro(1);
         
-        ArquivoSeguro arq_seg = new ArquivoSeguro();
-        arq_seg.gravarArquivo(seguropj_1);
-        /* 
         System.out.println("-----------------Instanciamento do SeguroPF -----------------");
         listaSeguradoras.get(0).gerarSeguroPF(dataInicio, dataFim, seguradora_1, veiculo_1, cliente_pf_1);
         SeguroPF seguropf_1 = (SeguroPF) listaSeguradoras.get(0).encontrarSeguro(2);
@@ -913,7 +910,7 @@ public class AppMain {
         seguropj_1.autorizarCondutor(condutor_2);
         
         System.out.println("-----------------Instanciamento do Sinistro PF-----------------");
-        String dataSinistroStr = "05/05/2010";
+        String dataSinistroStr = "2010-05-05";
         LocalDate dataSinistro = LocalDate.parse(dataSinistroStr, formatador);
         seguropf_1.gerarSinistro(dataSinistro, "Rua do Sinistro 1", condutor_1, seguropf_1);
 
@@ -951,7 +948,80 @@ public class AppMain {
 
         System.out.println("-----------------Listar Sinistros por ClientePJ-----------------");
         System.out.println(listaSeguradoras.get(0).getSinistrosPorCliente(cliente_pj_1));
-        */
         
+        //Gravação de dados em arquivos
+        System.out.println("-----------------Gravar Seguro PJ e Seguro PF-----------------");
+        ArquivoSeguro arq_seg = new ArquivoSeguro();
+        arq_seg.gravarArquivo(seguropj_1);
+        arq_seg.gravarArquivo(seguropf_1);
+        System.out.println("SeguroPJ 1 e SeguroPF 1 gravados");
+
+        System.out.println("-----------------Gravar Sinistros-----------------");
+        ArquivoSinistro arq_sin = new ArquivoSinistro();
+        arq_sin.gravarArquivo(seguradora_1.encontrarSinistro(1));
+        arq_sin.gravarArquivo(seguradora_1.encontrarSinistro(2));
+        System.out.println("Sinistro 1 e Sinistro 2 gravados");
+
+        //Leitura de dados dos arquivos
+        
+        System.out.println("-----------------Leitura de veiculos.csv-----------------");
+        ArquivoVeiculo v = new ArquivoVeiculo();
+        ArrayList<String[]> lista_veiculo = v.lerArquivo();
+        for (int i = 0; i < lista_veiculo.size(); i++){
+            Veiculo veiculo = new Veiculo(lista_veiculo.get(i)[0], lista_veiculo.get(i)[1], lista_veiculo.get(i)[2], Integer.parseInt(lista_veiculo.get(i)[3]));
+            seguradora_1.getListaVeiculos().add(veiculo);
+            System.out.println("O veiculo " + veiculo.getPlaca() + " foi adicionado");
+        } 
+        System.out.println("veiculos.csv lido e instanciado");
+
+        System.out.println("-----------------Leitura de condutores.csv-----------------");
+        ArquivoCondutor c = new ArquivoCondutor();
+        ArrayList<String[]> lista_condutor = c.lerArquivo();
+        for (int i = 0; i < lista_condutor.size(); i++){
+            Condutor condutor = new Condutor(lista_condutor.get(i)[0], lista_condutor.get(i)[1], lista_condutor.get(i)[2],
+                                            lista_condutor.get(i)[3], lista_condutor.get(i)[4], LocalDate.parse(lista_condutor.get(i)[5], formatador));
+            seguradora_1.getListaCondutores().add(condutor);
+            System.out.println("O condutor " + condutor.getNome() + " foi adicionado");
+        }
+        System.out.println("condutores.csv lido e instanciado");
+
+        System.out.println("-----------------Leitura de frotas.csv-----------------");
+        ArquivoFrota f = new ArquivoFrota();
+        ArrayList<String[]> lista_frota = f.lerArquivo();
+        for (int i = 0; i < lista_frota.size(); i++){
+            Frota frota = new Frota(lista_frota.get(i)[0]);
+            for (int j = 1; j < lista_frota.get(i).length ; j++){
+                Veiculo veiculo_frota = seguradora_1.encontra_veiculo_seg(lista_frota.get(i)[j]);
+                frota.addVeiculo(veiculo_frota);
+            }
+            seguradora_1.getListaFrota().add(frota);
+        }
+        System.out.println("frotas.csv lido e instanciado");
+
+        System.out.println("-----------------Leitura de clientesPF.csv-----------------");
+        ArquivoClientePF pf = new ArquivoClientePF();
+        ArrayList<String[]> lista_pf = pf.lerArquivo();
+        for (int i = 0; i < lista_pf.size(); i++){
+            ClientePF clientePF = new ClientePF(lista_pf.get(i)[1], lista_pf.get(i)[2], lista_pf.get(i)[3],
+                                                lista_pf.get(i)[4], lista_pf.get(i)[6], lista_pf.get(i)[5],
+                                                lista_pf.get(i)[0], LocalDate.parse(lista_pf.get(i)[7], formatador));
+            Veiculo veiculo_pf = seguradora_1.encontra_veiculo_seg(lista_pf.get(i)[8]);
+            clientePF.cadastrar_veiculo(veiculo_pf);
+            seguradora_1.cadastrarCliente(clientePF);
+        }
+        System.out.println("clientesPF.csv lido e instanciado");
+
+        System.out.println("-----------------Leitura de ClientesPJ.csv-----------------");
+        ArquivoClientePJ pj = new ArquivoClientePJ();
+        ArrayList<String[]> lista_pj = pj.lerArquivo();
+        for (int i = 0; i < lista_pj.size(); i++){
+            ClientePJ clientePJ = new ClientePJ(lista_pj.get(i)[1], lista_pj.get(i)[2], lista_pj.get(i)[3],
+                                                lista_pj.get(i)[4], lista_pj.get(i)[0], 100,
+                                                LocalDate.parse(lista_pj.get(i)[5], formatador));
+            Frota frota_pj = seguradora_1.encontra_frota_seg(lista_pj.get(i)[6]);
+            clientePJ.cadastrarFrota(frota_pj);
+            seguradora_1.cadastrarCliente(clientePJ);
+        }
+        System.out.println("clientesPJ.csv lido e instanciado");
     }
 }

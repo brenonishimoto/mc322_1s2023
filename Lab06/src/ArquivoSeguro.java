@@ -19,7 +19,7 @@ public class ArquivoSeguro implements I_Arquivo<Seguro> {
 
         String lista_condutores = "";
         for (int i = 0; i < seguro.getListaCondutores().size(); i++) {
-            lista_condutores += seguro.getListaCondutores().get(i).getCpf();
+            lista_condutores += seguro.getListaCondutores().get(i).getCpf() + ",";
         }
 
         String segg = Integer.toString(seguro.getId()) + ", " + seguro.getDataInicio().toString() + ", " +
@@ -42,20 +42,21 @@ public class ArquivoSeguro implements I_Arquivo<Seguro> {
     @Override
     public ArrayList<String[]> lerArquivo() {
         ArrayList<String[]> listaPF = new ArrayList<String[]>();
-        String splitBy = ",";
-        try {
-            File file = new File(csvSeguros);
+        String splitBy =",";
+        try{
+            File file = new File("lab06-seguradora_arquivos_v2/seguros.csv");
             FileReader fr = new FileReader(file);
             BufferedReader br = new BufferedReader(fr);
             String line = "";
             String[] tempArr;
+            br.readLine();
             while ((line = br.readLine()) != null) {
                 tempArr = line.split(splitBy);
                 listaPF.add(tempArr);
             }
             br.close();
             return listaPF;
-        } catch (IOException ioe) {
+        }catch (IOException ioe) {
             ioe.printStackTrace();
         }
         return null;

@@ -11,30 +11,20 @@ public class ArquivoClientePF implements I_Arquivo<ClientePF>{
 
     @Override
     public Boolean gravarArquivo(ClientePF clientePF) {
-        String[] cliente = {clientePF.getCpf(), clientePF.getNome(), clientePF.getTelefone(),
-                            clientePF.getEndereco(), clientePF.getEmail(), clientePF.getGenero(),
-                            clientePF.getEducacao(), clientePF.getDataNascimento().toString(),
-                            clientePF.getListaVeiculos().get(0).getPlaca()};
-        try{
-        File file = new File(csvPF);
-        FileWriter fileWriter = new FileWriter(file);
-        
-            for(String data : cliente){
-                StringBuilder line = new StringBuilder();
-                for (int i = 0; i < data.length(); i++) {
-                    line.append("\"");
-                    line.append(data.replaceAll("\"","\"\""));
-                    line.append("\"");
-                    if (i != data.length() - 1) {
-                        line.append(',');
-                    }
-                }
-                line.append("\n");
-                fileWriter.write(line.toString());
-            }
+
+        String cliepf =clientePF.getCpf() + ", " + clientePF.getNome() + ", " +
+                clientePF.getTelefone() + ", " + clientePF.getEndereco() + ", " +
+                clientePF.getEmail() + ", " + clientePF.getGenero() + ", " +
+                clientePF.getEducacao() + ", " + clientePF.getDataNascimento() + ", " + 
+                clientePF.getListaVeiculos().get(0).getPlaca() + "\n";
+
+        try {
+            File file = new File(csvPF);
+            FileWriter fileWriter = new FileWriter(file, true);
+            fileWriter.write(cliepf);
             fileWriter.close();
             return true;
-        }catch (IOException ioe) {
+        } catch (IOException ioe) {
             ioe.printStackTrace();
             return false;
         }
@@ -50,6 +40,7 @@ public class ArquivoClientePF implements I_Arquivo<ClientePF>{
             BufferedReader br = new BufferedReader(fr);
             String line = "";
             String[] tempArr;
+            br.readLine();
             while ((line = br.readLine()) != null) {
                 tempArr = line.split(splitBy);
                 listaPF.add(tempArr);
@@ -61,5 +52,4 @@ public class ArquivoClientePF implements I_Arquivo<ClientePF>{
         }
         return null;
     }
-    
 }

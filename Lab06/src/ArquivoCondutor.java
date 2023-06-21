@@ -12,29 +12,17 @@ public class ArquivoCondutor implements I_Arquivo<Condutor>{
 
     @Override
     public Boolean gravarArquivo(Condutor condutor) {
-        String[] condut = {condutor.getCpf(), condutor.getNome(), condutor.getTelefone(),
-                            condutor.getEndereco(), condutor.getEmail(),
-                            condutor.getDataNasc().toString()};
-        try{
-        File file = new File(csvCondutores);
-        FileWriter fileWriter = new FileWriter(file);
-        
-            for(String data : condut){
-                StringBuilder line = new StringBuilder();
-                for (int i = 0; i < data.length(); i++) {
-                    line.append("\"");
-                    line.append(data.replaceAll("\"","\"\""));
-                    line.append("\"");
-                    if (i != data.length() - 1) {
-                        line.append(',');
-                    }
-                }
-                line.append("\n");
-                fileWriter.write(line.toString());
-            }
+        String condut =condutor.getCpf() + ", " + condutor.getNome() + ", " +
+                condutor.getTelefone() + ", " + condutor.getEndereco() + ", " +
+                condutor.getEmail() + ", " + condutor.getDataNasc() + "\n";
+
+        try {
+            File file = new File(csvCondutores);
+            FileWriter fileWriter = new FileWriter(file, true);
+            fileWriter.write(condut);
             fileWriter.close();
             return true;
-        }catch (IOException ioe) {
+        } catch (IOException ioe) {
             ioe.printStackTrace();
             return false;
         }
@@ -50,6 +38,7 @@ public class ArquivoCondutor implements I_Arquivo<Condutor>{
             BufferedReader br = new BufferedReader(fr);
             String line = "";
             String[] tempArr;
+            br.readLine();
             while ((line = br.readLine()) != null) {
                 tempArr = line.split(splitBy);
                 listaPF.add(tempArr);
@@ -61,5 +50,4 @@ public class ArquivoCondutor implements I_Arquivo<Condutor>{
         }
         return null;
     }
-    
 }

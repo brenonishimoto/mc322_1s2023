@@ -31,7 +31,7 @@ public class Frota {
     //Adiciona um veiculo a frota, chamado pela função atualizar frota do clientepj
     public boolean addVeiculo(Veiculo veiculo){
         listaVeiculos.add(veiculo);
-        System.out.println("O Veiculo "+ veiculo.getPlaca() +" foi adicionado a frota.");
+        System.out.println("O Veiculo "+ veiculo.getPlaca() +" foi adicionado a frota " + getCode() + ".");
         return true;
     }
 

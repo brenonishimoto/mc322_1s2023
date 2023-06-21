@@ -11,29 +11,18 @@ public class ArquivoClientePJ implements I_Arquivo<ClientePJ>{
 
     @Override
     public Boolean gravarArquivo(ClientePJ clientePJ) {
-        String[] cliente = {clientePJ.getCnpj(), clientePJ.getNome(), clientePJ.getTelefone(),
-                            clientePJ.getEndereco(), clientePJ.getEmail(), clientePJ.getDataFundacao().toString(),
-                            clientePJ.listaFrotas().get(0).getCode()};
-        try{
-        File file = new File(csvPJ);
-        FileWriter fileWriter = new FileWriter(file);
-        
-            for(String data : cliente){
-                StringBuilder line = new StringBuilder();
-                for (int i = 0; i < data.length(); i++) {
-                    line.append("\"");
-                    line.append(data.replaceAll("\"","\"\""));
-                    line.append("\"");
-                    if (i != data.length() - 1) {
-                        line.append(',');
-                    }
-                }
-                line.append("\n");
-                fileWriter.write(line.toString());
-            }
+        String cliepj =clientePJ.getCnpj() + ", " + clientePJ.getNome() + ", " +
+                clientePJ.getTelefone() + ", " + clientePJ.getEndereco() + ", " +
+                clientePJ.getEmail() + ", " +  clientePJ.getDataFundacao() + ", " + 
+                clientePJ.listaFrotas().get(0).getCode() + "\n";
+
+        try {
+            File file = new File(csvPJ);
+            FileWriter fileWriter = new FileWriter(file, true);
+            fileWriter.write(cliepj);
             fileWriter.close();
             return true;
-        }catch (IOException ioe) {
+        } catch (IOException ioe) {
             ioe.printStackTrace();
             return false;
         }
@@ -49,6 +38,7 @@ public class ArquivoClientePJ implements I_Arquivo<ClientePJ>{
             BufferedReader br = new BufferedReader(fr);
             String line = "";
             String[] tempArr;
+            br.readLine();
             while ((line = br.readLine()) != null) {
                 tempArr = line.split(splitBy);
                 listaPF.add(tempArr);
@@ -60,5 +50,4 @@ public class ArquivoClientePJ implements I_Arquivo<ClientePJ>{
         }
         return null;
     }
-    
 }

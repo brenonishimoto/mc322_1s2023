@@ -1,6 +1,7 @@
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -10,7 +11,19 @@ public class ArquivoVeiculo implements I_Arquivo<Veiculo>{
 
     @Override
     public Boolean gravarArquivo(Veiculo veiculo) {
-        return false;
+        String veic = veiculo.getPlaca() + ", " + veiculo.getMarca() + ", " +
+                veiculo.getModelo() + ", " + veiculo.getAnoFabricacao() + "\n";
+
+        try {
+            File file = new File(csvVeiculos);
+            FileWriter fileWriter = new FileWriter(file, true);
+            fileWriter.write(veic);
+            fileWriter.close();
+            return true;
+        } catch (IOException ioe) {
+            ioe.printStackTrace();
+            return false;
+        }
     }
 
     @Override
@@ -23,6 +36,7 @@ public class ArquivoVeiculo implements I_Arquivo<Veiculo>{
             BufferedReader br = new BufferedReader(fr);
             String line = "";
             String[] tempArr;
+            br.readLine();
             while ((line = br.readLine()) != null) {
                 tempArr = line.split(splitBy);
                 listaPF.add(tempArr);

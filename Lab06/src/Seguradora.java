@@ -11,6 +11,8 @@ public class Seguradora {
 	private ArrayList<Cliente> listaCliente;
 	private ArrayList<Seguro> listaSeguros;
 	private ArrayList<Condutor> listaCondutores;
+	private ArrayList<Veiculo> listaVeiculos;
+	private ArrayList<Frota> listaFrotas;
 
 	// Construtor
 	//Foi-se criado a lista de Condutores pois imagina-se que um condutor pode participar de seguros diferentes.
@@ -23,6 +25,8 @@ public class Seguradora {
 		listaCliente = new ArrayList<Cliente>();
 		listaSeguros = new ArrayList<Seguro>();
 		listaCondutores = new ArrayList<Condutor>();
+		listaVeiculos = new ArrayList<Veiculo>();
+		listaFrotas = new ArrayList<Frota>();
 	}
 	
 	// Getters e setters
@@ -70,6 +74,14 @@ public class Seguradora {
 		this.listaCliente = listaCliente;
 	}
 	
+	public ArrayList<Condutor> getListaCondutores(){
+		return listaCondutores;
+	}
+	
+	public void setListaCondutores(ArrayList<Condutor> listaCondutores){
+		this.listaCondutores = listaCondutores;
+	}
+
 	public ArrayList<Seguro> getListaSeguros(){
 		return listaSeguros;
 	}
@@ -77,7 +89,23 @@ public class Seguradora {
 	public void setListaSeguros(ArrayList<Seguro> listaSeguros){
 		this.listaSeguros = listaSeguros;
 	}
+
+	public ArrayList<Veiculo> getListaVeiculos(){
+		return listaVeiculos;
+	}
 	
+	public void setListaVeiculos(ArrayList<Veiculo> listaVeiculos){
+		this.listaVeiculos = listaVeiculos;
+	}
+	
+	public ArrayList<Frota> getListaFrota(){
+		return listaFrotas;
+	}
+	
+	public void setListaFrotas(ArrayList<Frota> listaFrotas){
+		this.listaFrotas = listaFrotas;
+	}
+
 	//Lista os clientes
 
 	public boolean listarClientes(){
@@ -272,6 +300,26 @@ public class Seguradora {
 	public boolean visualizarSinistro(Sinistro sinistro){
 		System.out.println(sinistro.toString());
 		return true;
+	}
+
+	//Encontra um veiculo na seguradora
+    public Veiculo encontra_veiculo_seg(String placa){
+		for (int i =0; i< getListaVeiculos().size();i++){
+			if(getListaVeiculos().get(i).getPlaca().equals(placa)){
+				return listaVeiculos.get(i);
+			}
+		}
+		return null;
+	}
+
+	//Encontra uma frota na seguradora
+    public Frota encontra_frota_seg(String code){
+		for (int i =0; i< getListaFrota().size();i++){
+			if(getListaFrota().get(i).getCode().equals(code)){
+				return listaFrotas.get(i);
+			}
+		}
+		return null;
 	}
 
 	public String toString() {

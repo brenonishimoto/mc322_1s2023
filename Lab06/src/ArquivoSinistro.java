@@ -11,28 +11,18 @@ public class ArquivoSinistro implements I_Arquivo<Sinistro>{
 
     @Override
     public Boolean gravarArquivo(Sinistro sinistro) {
-        String[] condut = {Integer.toString(sinistro.getId()) , sinistro.getData().toString(), sinistro.getEndereco(),
-                           sinistro.getCondutor().getNome(), Integer.toString(sinistro.getSeguro().getId())};
-        try{
-        File file = new File("lab06-seguradora_arquivos_v2/sinistros.csv");
-        FileWriter fileWriter = new FileWriter(file);
         
-            for(String data : condut){
-                StringBuilder line = new StringBuilder();
-                for (int i = 0; i < data.length(); i++) {
-                    line.append("\"");
-                    line.append(data.replaceAll("\"","\"\""));
-                    line.append("\"");
-                    if (i != data.length() - 1) {
-                        line.append(',');
-                    }
-                }
-                line.append("\n");
-                fileWriter.write(line.toString());
-            }
+        String sinn = Integer.toString(sinistro.getId()) + ", " + sinistro.getData() + ", " +
+                sinistro.getEndereco() + ", " + sinistro.getCondutor().getCpf() + ", " +
+                sinistro.getSeguro().getId() + "\n";
+
+        try {
+            File file = new File("lab06-seguradora_arquivos_v2/sinistros.csv");
+            FileWriter fileWriter = new FileWriter(file, true);
+            fileWriter.write(sinn);
             fileWriter.close();
             return true;
-        }catch (IOException ioe) {
+        } catch (IOException ioe) {
             ioe.printStackTrace();
             return false;
         }
@@ -43,11 +33,12 @@ public class ArquivoSinistro implements I_Arquivo<Sinistro>{
         ArrayList<String[]> listaPF = new ArrayList<String[]>();
         String splitBy =",";
         try{
-            File file = new File(csvSinistros);
+            File file = new File("lab06-seguradora_arquivos_v2/sinistros.csv");
             FileReader fr = new FileReader(file);
             BufferedReader br = new BufferedReader(fr);
             String line = "";
             String[] tempArr;
+            br.readLine();
             while ((line = br.readLine()) != null) {
                 tempArr = line.split(splitBy);
                 listaPF.add(tempArr);
@@ -59,5 +50,4 @@ public class ArquivoSinistro implements I_Arquivo<Sinistro>{
         }
         return null;
     }
-    
 }

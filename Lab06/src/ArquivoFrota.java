@@ -12,31 +12,21 @@ public class ArquivoFrota implements I_Arquivo<Frota>{
 
     @Override
     public Boolean gravarArquivo(Frota frota) {
-        ArrayList<String> frt = new ArrayList<>();
-        frt.add(frota.getCode());
-        for (int i = 0; i < frota.getListaVeiculos().size() ; i++){
-            frt.add(frota.getListaVeiculos().get(i).getPlaca());
-        }
-        try{
-        File file = new File(csvFrotas);
-        FileWriter fileWriter = new FileWriter(file);
         
-            for(String data : frt){
-                StringBuilder line = new StringBuilder();
-                for (int i = 0; i < data.length(); i++) {
-                    line.append("\"");
-                    line.append(data.replaceAll("\"","\"\""));
-                    line.append("\"");
-                    if (i != data.length() - 1) {
-                        line.append(',');
-                    }
-                }
-                line.append("\n");
-                fileWriter.write(line.toString());
-            }
+        String lista_placas = "";
+        for (int i = 0; i < frota.getListaVeiculos().size(); i++) {
+            lista_placas += frota.getListaVeiculos().get(i).getPlaca() + ",";
+        }
+
+        String frot = frota.getCode() + ", " + lista_placas + "\n";
+
+        try {
+            File file = new File(csvFrotas);
+            FileWriter fileWriter = new FileWriter(file, true);
+            fileWriter.write(frot);
             fileWriter.close();
             return true;
-        }catch (IOException ioe) {
+        } catch (IOException ioe) {
             ioe.printStackTrace();
             return false;
         }
@@ -52,6 +42,7 @@ public class ArquivoFrota implements I_Arquivo<Frota>{
             BufferedReader br = new BufferedReader(fr);
             String line = "";
             String[] tempArr;
+            br.readLine();
             while ((line = br.readLine()) != null) {
                 tempArr = line.split(splitBy);
                 listaPF.add(tempArr);
@@ -63,5 +54,4 @@ public class ArquivoFrota implements I_Arquivo<Frota>{
         }
         return null;
     }
-    
 }
