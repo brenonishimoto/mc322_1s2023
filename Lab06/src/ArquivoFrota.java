@@ -1,6 +1,7 @@
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -11,7 +12,34 @@ public class ArquivoFrota implements I_Arquivo<Frota>{
 
     @Override
     public Boolean gravarArquivo(Frota frota) {
-        return false;
+        ArrayList<String> frt = new ArrayList<>();
+        frt.add(frota.getCode());
+        for (int i = 0; i < frota.getListaVeiculos().size() ; i++){
+            frt.add(frota.getListaVeiculos().get(i).getPlaca());
+        }
+        try{
+        File file = new File(csvFrotas);
+        FileWriter fileWriter = new FileWriter(file);
+        
+            for(String data : frt){
+                StringBuilder line = new StringBuilder();
+                for (int i = 0; i < data.length(); i++) {
+                    line.append("\"");
+                    line.append(data.replaceAll("\"","\"\""));
+                    line.append("\"");
+                    if (i != data.length() - 1) {
+                        line.append(',');
+                    }
+                }
+                line.append("\n");
+                fileWriter.write(line.toString());
+            }
+            fileWriter.close();
+            return true;
+        }catch (IOException ioe) {
+            ioe.printStackTrace();
+            return false;
+        }
     }
 
     @Override

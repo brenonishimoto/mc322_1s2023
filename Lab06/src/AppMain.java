@@ -826,12 +826,19 @@ public class AppMain {
     // Instanciação de teste
     public static void teste(Scanner scanner, ArrayList<Seguradora> listaSeguradoras){
     // Instanciação e chamada de métodos
+        /* 
+        System.out.println("1111111111111111111111");
+        ArquivoVeiculo s = new ArquivoVeiculo();
+        ArrayList<String[]> lista_veiculo = s.lerArquivo();
+        System.out.println(lista_veiculo.get(0)[0]);
+        System.out.println("22222222222222222222");
+        */
 
         System.out.println("-----------------Instanciamento de Seguradora-----------------");
         Seguradora seguradora_1 = new Seguradora("15.693.842/0001-43", "Seguradora 1", "(19)40028922", "seguradora1@gmail.com", "Rua da Seguradora 1");
         listaSeguradoras.add(seguradora_1);
         System.out.println("A seguradora '" + seguradora_1.getNome() + "' foi adicionada!");
-
+        
         System.out.println("-----------------Instanciamento de Cliente PF-----------------");
         DateTimeFormatter formatador = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         String dataNascimentoStr = "12/12/1990";
@@ -851,7 +858,7 @@ public class AppMain {
         }
         ClientePF cliente_pf_1 = new ClientePF(nome_1, "(71)3244-0891","Rua do Guilherme", "guilherme@gmail.com", "Ensino Superior" , "Masculino", cpf, dataNascimento);
         listaSeguradoras.get(0).cadastrarCliente(cliente_pf_1);
-
+        
         System.out.println("-----------------Instanciamento de Cliente PJ-----------------");
         String dataFundacaoStr = "13/04/2012";
         LocalDate dataFundacao = LocalDate.parse(dataFundacaoStr, formatador);
@@ -869,39 +876,42 @@ public class AppMain {
         System.out.println("-----------------Instanciamento de Frota-----------------");
         Frota frota_1 = new Frota("Frota 1");
         cliente_pj_1.cadastrarFrota(frota_1);
-
+        
         System.out.println("-----------------Instanciamento do Veiculo no ClientePF-----------------");
         Veiculo veiculo_1 = new Veiculo("BRA2E19", "Chevrolet", "Celta", 2015);
         cliente_pf_1.cadastrar_veiculo(veiculo_1);
-
+        
         System.out.println("-----------------Instanciamento do Veiculo na Frota do ClientePJ-----------------");
         Veiculo veiculo_2 = new Veiculo("RIO2A18", "Ford", "Focus", 2019);
         cliente_pj_1.atualizarFrota_adicionar_veiculo(1, veiculo_2);
-
+        
         String dataInicioStr = "01/01/2010";
         LocalDate dataInicio = LocalDate.parse(dataInicioStr, formatador);
         String dataFimStr = "31/12/2010";
         LocalDate dataFim = LocalDate.parse(dataFimStr, formatador);
-
+        
         System.out.println("-----------------Instanciamento do SeguroPJ -----------------");
         listaSeguradoras.get(0).gerarSeguroPJ(dataInicio, dataFim, seguradora_1, frota_1, cliente_pj_1);
         SeguroPJ seguropj_1 = (SeguroPJ) listaSeguradoras.get(0).encontrarSeguro(1);
         
+        ArquivoSeguro arq_seg = new ArquivoSeguro();
+        arq_seg.gravarArquivo(seguropj_1);
+        /* 
         System.out.println("-----------------Instanciamento do SeguroPF -----------------");
         listaSeguradoras.get(0).gerarSeguroPF(dataInicio, dataFim, seguradora_1, veiculo_1, cliente_pf_1);
         SeguroPF seguropf_1 = (SeguroPF) listaSeguradoras.get(0).encontrarSeguro(2);
-
-
+        
+        
         System.out.println("-----------------Instanciamento do Condutor (SeguroPF)-----------------");
         Condutor condutor_1 = new Condutor("71356301657", "João", "(11)1111-1111","Rua do João", "joao@gmail.com", dataNascimento);
         listaSeguradoras.get(0).cadastrarCondutor(condutor_1);
         seguropf_1.autorizarCondutor(condutor_1);
-
+        
         System.out.println("-----------------Instanciamento do Condutor (SeguroPJ)-----------------");
         Condutor condutor_2 = new Condutor("21892605074", "Maria", "(22)2222-2222","Rua da Maria", "maria@gmail.com", dataNascimento);
         listaSeguradoras.get(0).cadastrarCondutor(condutor_2);
         seguropj_1.autorizarCondutor(condutor_2);
-
+        
         System.out.println("-----------------Instanciamento do Sinistro PF-----------------");
         String dataSinistroStr = "05/05/2010";
         LocalDate dataSinistro = LocalDate.parse(dataSinistroStr, formatador);
@@ -941,7 +951,7 @@ public class AppMain {
 
         System.out.println("-----------------Listar Sinistros por ClientePJ-----------------");
         System.out.println(listaSeguradoras.get(0).getSinistrosPorCliente(cliente_pj_1));
-        
+        */
         
     }
 }

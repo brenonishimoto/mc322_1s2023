@@ -12,14 +12,14 @@ public class ArquivoCondutor implements I_Arquivo<Condutor>{
 
     @Override
     public Boolean gravarArquivo(Condutor condutor) {
-        String[] cliente = {condutor.getCpf(), condutor.getNome(), condutor.getTelefone(),
+        String[] condut = {condutor.getCpf(), condutor.getNome(), condutor.getTelefone(),
                             condutor.getEndereco(), condutor.getEmail(),
                             condutor.getDataNasc().toString()};
         try{
         File file = new File(csvCondutores);
         FileWriter fileWriter = new FileWriter(file);
         
-            for(String data : cliente){
+            for(String data : condut){
                 StringBuilder line = new StringBuilder();
                 for (int i = 0; i < data.length(); i++) {
                     line.append("\"");
