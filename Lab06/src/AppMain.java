@@ -31,6 +31,7 @@ public class AppMain {
         System.out.println("7 - Gerar Sinistro");
         System.out.println("8 - Calcular Valor Mensal Seguro");
         System.out.println("9 - Calcular Receita Seguradora");
+        System.out.println("10 - Sair e Deletar Seguro.csv e Sinistro.csv");
         System.out.println("0 - Sair");
         
         int opcao = scanner.nextInt();
@@ -66,7 +67,7 @@ public class AppMain {
             case CALCULAR_RECEITA_SEGURADORA:
                 calcular_receita_seguro(scanner, listaSeguradoras);
                 break;
-            case SAIR:
+            case SAIR_DELETAR:
                 System.out.println("Até mais!");
                 
                 File file_1 = new File("lab06-seguradora_arquivos_v2/seguros.csv");
@@ -74,6 +75,10 @@ public class AppMain {
                 File file_2 = new File("lab06-seguradora_arquivos_v2/sinistros.csv");
                 file_2.delete();
                 
+                scanner.close();
+                System.exit(1);
+            case SAIR:
+                System.out.println("Até mais!");                
                 scanner.close();
                 System.exit(1);
             }
@@ -1002,12 +1007,14 @@ public class AppMain {
         ArquivoClientePF pf = new ArquivoClientePF();
         ArrayList<String[]> lista_pf = pf.lerArquivo();
         for (int i = 0; i < lista_pf.size(); i++){
-            ClientePF clientePF = new ClientePF(lista_pf.get(i)[1], lista_pf.get(i)[2], lista_pf.get(i)[3],
-                                                lista_pf.get(i)[4], lista_pf.get(i)[6], lista_pf.get(i)[5],
-                                                lista_pf.get(i)[0], LocalDate.parse(lista_pf.get(i)[7], formatador));
-            Veiculo veiculo_pf = seguradora_1.encontra_veiculo_seg(lista_pf.get(i)[8]);
-            clientePF.cadastrar_veiculo(veiculo_pf);
-            seguradora_1.cadastrarCliente(clientePF);
+            if (Validacao.validarCPF(lista_pf.get(i)[0]) == true){
+                ClientePF clientePF = new ClientePF(lista_pf.get(i)[1], lista_pf.get(i)[2], lista_pf.get(i)[3],
+                                                    lista_pf.get(i)[4], lista_pf.get(i)[6], lista_pf.get(i)[5],
+                                                    lista_pf.get(i)[0], LocalDate.parse(lista_pf.get(i)[7], formatador));
+                Veiculo veiculo_pf = seguradora_1.encontra_veiculo_seg(lista_pf.get(i)[8]);
+                clientePF.cadastrar_veiculo(veiculo_pf);
+                seguradora_1.cadastrarCliente(clientePF);
+            }
         }
         System.out.println("clientesPF.csv lido e instanciado");
 
@@ -1015,12 +1022,14 @@ public class AppMain {
         ArquivoClientePJ pj = new ArquivoClientePJ();
         ArrayList<String[]> lista_pj = pj.lerArquivo();
         for (int i = 0; i < lista_pj.size(); i++){
-            ClientePJ clientePJ = new ClientePJ(lista_pj.get(i)[1], lista_pj.get(i)[2], lista_pj.get(i)[3],
-                                                lista_pj.get(i)[4], lista_pj.get(i)[0], 100,
-                                                LocalDate.parse(lista_pj.get(i)[5], formatador));
-            Frota frota_pj = seguradora_1.encontra_frota_seg(lista_pj.get(i)[6]);
-            clientePJ.cadastrarFrota(frota_pj);
-            seguradora_1.cadastrarCliente(clientePJ);
+            if (Validacao.validarCNPJ(lista_pj.get(i)[0]) == true){
+                ClientePJ clientePJ = new ClientePJ(lista_pj.get(i)[1], lista_pj.get(i)[2], lista_pj.get(i)[3],
+                                                    lista_pj.get(i)[4], lista_pj.get(i)[0], 100,
+                                                    LocalDate.parse(lista_pj.get(i)[5], formatador));
+                Frota frota_pj = seguradora_1.encontra_frota_seg(lista_pj.get(i)[6]);
+                clientePJ.cadastrarFrota(frota_pj);
+                seguradora_1.cadastrarCliente(clientePJ);
+            }
         }
         System.out.println("clientesPJ.csv lido e instanciado");
     }

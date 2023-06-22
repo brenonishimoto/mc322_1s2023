@@ -7,25 +7,46 @@ import java.util.ArrayList;
 
 public class ArquivoSeguro implements I_Arquivo<Seguro> {
 
+    public ArquivoSeguro(){
+            criarCabecalho();
+    }
+
     String csvSeguros = null;
+
+    public Boolean criarCabecalho(){
+            try {
+            File file = new File("lab06-seguradora_arquivos_v2/seguros.csv");
+            FileWriter fileWriter = new FileWriter(file, false);
+            fileWriter.write("id, dataInicio, dataFim, seguradora, listaSinistros, listaCondutores, valorMensal" + "\n");
+            fileWriter.close();
+            return true;
+        } catch (IOException ioe) {
+            ioe.printStackTrace();
+            return false;
+        }
+    }
 
     @Override
     public Boolean gravarArquivo(Seguro seguro) {
-
+        
         String lista_sinistros = "";
         for (int i = 0; i < seguro.getListaSinistros().size(); i++) {
-            lista_sinistros += Integer.toString(seguro.getListaSinistros().get(i).getId()) + ",";
+            lista_sinistros += Integer.toString(seguro.getListaSinistros().get(i).getId());
+            if (i+1 < seguro.getListaSinistros().size())
+                lista_sinistros +=",";
         }
 
         String lista_condutores = "";
         for (int i = 0; i < seguro.getListaCondutores().size(); i++) {
-            lista_condutores += seguro.getListaCondutores().get(i).getCpf() + ",";
+            lista_condutores += seguro.getListaCondutores().get(i).getCpf();
+            if(i+1 < seguro.getListaCondutores().size())
+                lista_condutores += ",";
         }
 
         String segg = Integer.toString(seguro.getId()) + ", " + seguro.getDataInicio().toString() + ", " +
                 seguro.getDataFim().toString() + ", " +
                 seguro.getSeguradora().getNome() + ", \"" + lista_sinistros + "\", \"" + lista_condutores + "\", " +
-                Double.toString(seguro.getValorMensal()) + "\n";
+                Double.toString(Math.round(seguro.getValorMensal())) + "\n";
 
         try {
             File file = new File("lab06-seguradora_arquivos_v2/seguros.csv");

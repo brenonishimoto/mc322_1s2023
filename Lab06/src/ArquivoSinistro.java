@@ -7,6 +7,25 @@ import java.util.ArrayList;
 
 public class ArquivoSinistro implements I_Arquivo<Sinistro>{
 
+    public ArquivoSinistro(){
+            criarCabecalho();
+    }
+
+    String csvSeguros = null;
+
+    public Boolean criarCabecalho(){
+            try {
+            File file = new File("lab06-seguradora_arquivos_v2/sinistros.csv");
+            FileWriter fileWriter = new FileWriter(file, false);
+            fileWriter.write("id, data, endereço, condutor, seguro" + "\n");
+            fileWriter.close();
+            return true;
+        } catch (IOException ioe) {
+            ioe.printStackTrace();
+            return false;
+        }
+    }
+
     String csvSinistros = null;
 
     @Override

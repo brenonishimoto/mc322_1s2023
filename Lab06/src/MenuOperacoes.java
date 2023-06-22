@@ -9,7 +9,8 @@ public enum MenuOperacoes {
     ATUALIZAR_FROTA(6),
     GERAR_SINISTRO(7),
     CALCULAR_VALOR_MENSAL_SEGURO(8),
-    CALCULAR_RECEITA_SEGURADORA(9);
+    CALCULAR_RECEITA_SEGURADORA(9),
+    SAIR_DELETAR(10);
 
     public final int operacao;
 
