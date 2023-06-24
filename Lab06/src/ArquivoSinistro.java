@@ -49,21 +49,21 @@ public class ArquivoSinistro implements I_Arquivo<Sinistro>{
 
     @Override
     public ArrayList<String[]> lerArquivo() {
-        ArrayList<String[]> listaPF = new ArrayList<String[]>();
-        String splitBy =",";
+        ArrayList<String[]> listaSin = new ArrayList<String[]>();
+        String separador =",";
         try{
             File file = new File("lab06-seguradora_arquivos_v2/sinistros.csv");
-            FileReader fr = new FileReader(file);
-            BufferedReader br = new BufferedReader(fr);
-            String line = "";
-            String[] tempArr;
-            br.readLine();
-            while ((line = br.readLine()) != null) {
-                tempArr = line.split(splitBy);
-                listaPF.add(tempArr);
+            FileReader leitor_arquivo = new FileReader(file);
+            BufferedReader leitor_buffer = new BufferedReader(leitor_arquivo);
+            String linha = "";
+            String[] lista_temporaria;
+            leitor_buffer.readLine();
+            while ((linha = leitor_buffer.readLine()) != null) {
+                lista_temporaria = linha.split(separador);
+                listaSin.add(lista_temporaria);
             }
-            br.close();
-            return listaPF;
+            leitor_buffer.close();
+            return listaSin;
         }catch (IOException ioe) {
             ioe.printStackTrace();
         }

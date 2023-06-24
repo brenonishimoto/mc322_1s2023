@@ -30,21 +30,21 @@ public class ArquivoCondutor implements I_Arquivo<Condutor>{
 
     @Override
     public ArrayList<String[]> lerArquivo() {
-        ArrayList<String[]> listaPF = new ArrayList<String[]>();
-        String splitBy =",";
+        ArrayList<String[]> listaCond = new ArrayList<String[]>();
+        String separador =",";
         try{
             File file = new File(csvCondutores);
-            FileReader fr = new FileReader(file);
-            BufferedReader br = new BufferedReader(fr);
-            String line = "";
-            String[] tempArr;
-            br.readLine();
-            while ((line = br.readLine()) != null) {
-                tempArr = line.split(splitBy);
-                listaPF.add(tempArr);
+            FileReader leitor_arquivo = new FileReader(file);
+            BufferedReader leitor_buffer = new BufferedReader(leitor_arquivo);
+            String linha = "";
+            String[] lista_temporaria;
+            leitor_buffer.readLine();
+            while ((linha = leitor_buffer.readLine()) != null) {
+                lista_temporaria = linha.split(separador);
+                listaCond.add(lista_temporaria);
             }
-            br.close();
-            return listaPF;
+            leitor_buffer.close();
+            return listaCond;
         }catch (IOException ioe) {
             ioe.printStackTrace();
         }
